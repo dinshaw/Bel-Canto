@@ -1,0 +1,19 @@
+- form_for @student, :url => students_path, :method => :post do |f|
+  = f.error_messages   
+  %p
+    = f.label :first_name 
+    = f.text_field :first_name 
+  
+  %p
+    = f.label :last_name 
+    = f.text_field :last_name 
+  
+  %p
+    = f.check_box :admin   
+    = f.label :admin 
+  
+  %p
+    = f.check_box :editor  
+    = f.label :editor 
+  
+  %p= f.submit 

@@ -1,0 +1,13 @@
+one:
+  first_name: MyString
+  last_name: MyString
+  admin: false
+  editor: false
+  state: MyString
+
+two:
+  first_name: MyString
+  last_name: MyString
+  admin: false
+  editor: false
+  state: MyString

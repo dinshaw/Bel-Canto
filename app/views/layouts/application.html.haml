@@ -10,18 +10,27 @@
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
 
     = csrf_meta_tag
+    = yield(:head)
 
 %body#bel_canto.bp.two-col
+
   #container
+
     #header
       %h1 The Art of Bel Canto
+
     #sidebar
       %ul
-        %li One
-        %li Two
-        %li Three
+        %li
+          %a{:href => students_path} Students
+        %li
+          %a{:href => schedule_path} Schedule
 
     #content
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}"
+    
+      = content_tag :h1, yield(:title) if show_title?
       = yield
   
     .push

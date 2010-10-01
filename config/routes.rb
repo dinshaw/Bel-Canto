@@ -1,7 +1,7 @@
 Belcanto::Application.routes.draw do
   get "home/index"
 
-  get "home/schedule"
+  match 'schedule' => 'home#schedule', :as => :schedule
 
   devise_for :users
 
