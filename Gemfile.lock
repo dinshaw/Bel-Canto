@@ -69,6 +69,7 @@ GEM
     net-ssh (2.0.23)
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
+    nifty-generators (0.4.1)
     paperclip (2.3.3)
       activerecord
       activesupport
@@ -118,6 +119,7 @@ DEPENDENCIES
   hoptoad_notifier (>= 2.3.7)
   hpricot
   jammit
+  nifty-generators
   paperclip
   rails (= 3.0.0)
   ruby_parser
