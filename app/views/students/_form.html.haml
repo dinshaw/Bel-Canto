@@ -9,11 +9,16 @@
     = f.text_field :last_name 
   
   %p
+    = f.label :email
+    = f.text_field :email
+
+  %p.checkbox 
     = f.check_box :admin   
     = f.label :admin 
   
-  %p
+  %p.checkbox
     = f.check_box :editor  
     = f.label :editor 
   
-  %p= f.submit 
+  %p.submit
+    = f.submit 

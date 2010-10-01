@@ -508,6 +508,22 @@ form.bp textarea {
   height: 250px;
 }
 
+/* line 8, ../../app/stylesheets/partials/_form.scss */
+label {
+  display: block;
+}
+
+/* line 10, ../../app/stylesheets/partials/_form.scss */
+.checkbox {
+  margin: 10px 0;
+}
+/* line 12, ../../app/stylesheets/partials/_form.scss */
+.checkbox input {
+  float: left;
+  margin: 0 10px 0 0;
+  padding: 0;
+}
+
 /* line 25, ../../app/stylesheets/partials/_two_col.scss */
 body.two-col #container {
   width: 950px;

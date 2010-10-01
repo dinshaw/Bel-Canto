@@ -4,3 +4,14 @@
 
 form.bp {
   @include blueprint-form; }
+
+label{display:block;}
+
+.checkbox{
+  margin:10px 0;
+  input{
+    float: left;
+    margin:0 10px 0 0;
+    padding:0;
+  }
+}
