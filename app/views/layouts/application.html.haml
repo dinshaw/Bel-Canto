@@ -1,0 +1,30 @@
+!!!
+%html
+  %head
+    %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon"}
+    %title= "Bel Canto :: "+controller.controller_name.capitalize
+    = include_javascripts :common
+    = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
+    = stylesheet_link_tag 'print.css', :media => 'print'
+    /[if lt IE 8]
+      = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
+
+    = csrf_meta_tag
+
+%body#bel_canto.bp.two-col
+  #container
+    #header
+      %h1 The Art of Bel Canto
+    #sidebar
+      %ul
+        %li One
+        %li Two
+        %li Three
+
+    #content
+      = yield
+  
+    .push
+  
+  #footer
+    2010 | Contact

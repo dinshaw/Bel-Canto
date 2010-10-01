@@ -1,0 +1,6 @@
+javascripts:
+  common:
+    - app/javascripts/vendor/jquery.js
+    - app/javascripts/vendor/jquery-ui.js    
+    - app/javascripts/vendor/*.js
+    - app/javascripts/custom/*.js
