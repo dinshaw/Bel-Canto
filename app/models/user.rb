@@ -44,6 +44,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :first_name, :last_name, :admin, :editor, :state
   
+  attr_accessor :state_transition
+  
   has_many :phone_numbers
   accepts_nested_attributes_for :phone_numbers, :allow_destroy => true
     
@@ -54,4 +56,11 @@ class User < ActiveRecord::Base
     [first_name, last_name].join(' ')
   end
 
+  def promotable?
+    ['trial', 'student', 'advanced'].include?(state)
+  end
+  
+  def demotable?
+    ['student', 'advanced', 'finished'].include?(state)
+  end
 end

@@ -12,6 +12,10 @@
     = f.label :email
     = f.text_field :email
 
+  %p
+    = f.label :state
+    = f.select :state_transition, [@student.state, 'On maintenance', 'Suspended', 'Excommunicated']
+    
   %p.checkbox 
     = f.check_box :admin   
     = f.label :admin 
