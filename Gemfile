@@ -23,3 +23,21 @@ gem 'resque_mailer'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'system_timer'
 gem 'transitions', :require => ['transitions', 'active_record/transitions']
+
+
+group :development, :test do
+	gem 'rspec-rails', '>= 2.0.0.beta.22'
+end
+
+
+group :test do 
+	gem 'capybara'
+  gem 'database_cleaner'
+  gem 'cucumber-rails'
+  gem 'cucumber'
+  gem 'launchy'
+  gem 'factory_girl_rails'
+	gem 'pickle'
+	gem 'shoulda'
+	gem 'email_spec'
+end
