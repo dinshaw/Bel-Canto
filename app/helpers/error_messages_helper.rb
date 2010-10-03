@@ -4,7 +4,9 @@ module ErrorMessagesHelper
     options = objects.extract_options!
     options[:header_message] ||= "Invalid Fields"
     options[:message] ||= "Correct the following errors and try again."
-    messages = objects.compact.map { |o| o.errors.full_messages }.flatten
+    messages = objects.compact.map do |o| 
+      o.errors.full_messages 
+    end.flatten
     unless messages.empty?
       content_tag(:div, :class => "error_messages") do
         list_items = messages.map { |msg| content_tag(:li, msg) }

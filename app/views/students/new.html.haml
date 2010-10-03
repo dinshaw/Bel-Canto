@@ -1,5 +1,6 @@
 - title "New Student"
 
-= render 'form'
-
+- form_for @student, :url => students_path, :method => :post do |f|
+  = render 'form', :f => f
+  
 = link_to "Back to List", students_path

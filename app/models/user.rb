@@ -8,50 +8,50 @@ class User < ActiveRecord::Base
     state :advanced
     state :finished
     state :on_maintenance
-    state :excommunicated    
-    state :suspended    
+    state :suspended
 
     event :promote do
       transitions :to => :student, :from => :trial
       transitions :to => :advanced, :from => :student
       transitions :to => :finished, :from => :advanced
     end
-    
+
     event :demote do
       transitions :from => :student, :to => :trial
       transitions :from => :advanced, :to => :student
       transitions :from => :finished, :to => :advanced
     end
-    
+
     event :maintenance do
-      transitions :from => :all, :to => :on_maintenance
+      transitions :from => [:trial, :student, :advanced, :finished], :to => :on_maintenance
     end
-  
+
     event :suspend do
-      transitions :from => :all, :to => :suspended
-    end  
-    
-    event :excommunicate do
-      transitions :from => :all, :to => :excommunicated
+      transitions :from => [:trial, :student, :advanced, :finished], :to => :suspended
     end
+
+    event :reinstate do
+      transitions :from => [:suspended, :on_maintenance], :to => :student
+    end
+
   end
-  
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable, :confirmable, :lockable and :timeoutable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :first_name, :last_name, :admin, :editor, :state
-  
+  attr_accessible :email, :password, :password_confirmation, :remember_me,
+                  :first_name, :last_name, :admin, :editor, :state, :phone_numbers_attributes
+
   attr_accessor :state_transition
-  
+
   has_many :phone_numbers
-  accepts_nested_attributes_for :phone_numbers, :allow_destroy => true
-    
+  accepts_nested_attributes_for :phone_numbers, :allow_destroy => true,
+    :reject_if => proc { |attributes| attributes['number'].blank? }
+
   validates :first_name, :presence => true
   validates :last_name, :presence => true
-  
+
   def full_name
     [first_name, last_name].join(' ')
   end
@@ -59,8 +59,16 @@ class User < ActiveRecord::Base
   def promotable?
     ['trial', 'student', 'advanced'].include?(state)
   end
-  
+
   def demotable?
     ['student', 'advanced', 'finished'].include?(state)
+  end
+
+  def reinstatable?
+    ['suspended', 'on_maintenance'].include?(state)    
+  end
+  
+  def display_state
+    state.titleize
   end
 end

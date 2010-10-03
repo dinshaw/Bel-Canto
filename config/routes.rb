@@ -11,8 +11,7 @@ Belcanto::Application.routes.draw do
 
   resources :students do
     member do
-      post 'promote'
-      post 'demote'
+      post 'transition'
     end
   end
   # Sample of regular route:

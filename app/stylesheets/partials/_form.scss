@@ -7,11 +7,27 @@ form.bp {
 
 label{display:block;}
 
-.checkbox{
-  margin:10px 0;
-  input{
-    float: left;
-    margin:0 10px 0 0;
-    padding:0;
-  }
+.left_float_item{
+  float: left;
+  margin-right:10px;    
+}
+.check_box{
+  clear: both;  
+  margin-top:10px;
+  input{ @extend .left_float_item}
+}
+
+.phone_number {
+  clear: both;
+  float:left;
+  * { @extend .left_float_item }
+}
+
+fieldset{
+  border: 1px solid $dark-border;
+  padding: 10px;
+}
+
+legend{
+  padding: 10px;  
 }

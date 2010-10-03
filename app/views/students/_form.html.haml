@@ -1,28 +1,52 @@
-- form_for @student, :url => students_path, :method => :post do |f|
-  = f.error_messages   
-  %p
-    = f.label :first_name 
-    = f.text_field :first_name 
-  
-  %p
-    = f.label :last_name 
-    = f.text_field :last_name 
-  
-  %p
-    = f.label :email
-    = f.text_field :email
+= f.error_messages   
+%p
+  = f.label :first_name 
+  = f.text_field :first_name 
 
-  %p
-    = f.label :state
-    = f.select :state_transition, [@student.state, 'On maintenance', 'Suspended', 'Excommunicated']
-    
-  %p.checkbox 
-    = f.check_box :admin   
-    = f.label :admin 
+%p
+  = f.label :last_name 
+  = f.text_field :last_name 
+
+%p
+  = f.label :email
+  = f.text_field :email
+
+- f.fields_for :phone_numbers do |phone|
+  %p.phone_number
+    = phone.select :kind, ['Mobil', 'Home', 'Work', 'Mother', 'Father', 'Other']
+    = phone.text_field :number 
+    - unless phone.object.new_record?
+      = phone.check_box '_destroy'
+      = phone.label '_delete', 'Remove'
+
+%p.check_box 
+  = f.check_box :admin   
+  = f.label :admin 
+
+%p.check_box
+  = f.check_box :editor  
+  = f.label :editor 
+
+%p.submit
+  = f.submit 
+
+- unless @student.new_record?
+  %fieldset
+  - if @student.reinstatable?
+    %legend= @student.display_state
   
-  %p.checkbox
-    = f.check_box :editor  
-    = f.label :editor 
-  
-  %p.submit
-    = f.submit 
+    %p 
+      = button_to "Reinstate", 
+        transition_student_path(@student, :transtion_to => :reinstate), 
+        :confirm => "Promote student?"
+
+  - else
+    %legend Active
+    %p
+      = button_to "Put on Maintenance", 
+        transition_student_path(@student, :transtion_to => :maintenance), 
+        :confirm => "Promote student?"
+    %p 
+      = button_to "Suspend", 
+        transition_student_path(@student, :transtion_to => :suspend), 
+        :confirm => "Promote student?"
