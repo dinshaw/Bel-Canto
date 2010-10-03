@@ -26,8 +26,10 @@ label{display:block;}
 fieldset{
   border: 1px solid $dark-border;
   padding: 10px;
+  
+  form{ @extend .left_float_item}
 }
 
 legend{
-  padding: 10px;  
+  padding: 0 10px;  
 }

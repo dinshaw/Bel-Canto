@@ -30,23 +30,3 @@
 %p.submit
   = f.submit 
 
-- unless @student.new_record?
-  %fieldset
-  - if @student.reinstatable?
-    %legend= @student.display_state
-  
-    %p 
-      = button_to "Reinstate", 
-        transition_student_path(@student, :transtion_to => :reinstate), 
-        :confirm => "Promote student?"
-
-  - else
-    %legend Active
-    %p
-      = button_to "Put on Maintenance", 
-        transition_student_path(@student, :transtion_to => :maintenance), 
-        :confirm => "Promote student?"
-    %p 
-      = button_to "Suspend", 
-        transition_student_path(@student, :transtion_to => :suspend), 
-        :confirm => "Promote student?"

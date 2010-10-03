@@ -457,7 +457,7 @@ label {
 }
 
 /* line 10, ../../app/stylesheets/partials/_form.scss */
-.left_float_item, .check_box input, .phone_number * {
+.left_float_item, .check_box input, .phone_number *, fieldset form {
   float: left;
   margin-right: 10px;
 }
@@ -480,9 +480,9 @@ fieldset {
   padding: 10px;
 }
 
-/* line 31, ../../app/stylesheets/partials/_form.scss */
+/* line 33, ../../app/stylesheets/partials/_form.scss */
 legend {
-  padding: 10px;
+  padding: 0 10px;
 }
 
 /* line 25, ../../app/stylesheets/partials/_layout.scss */
