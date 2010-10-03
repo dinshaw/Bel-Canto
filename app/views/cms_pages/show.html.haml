@@ -1,0 +1,27 @@
+%p
+  %strong Key:
+  = @cms_page.key
+
+%p
+  %strong Css Class:
+  = @cms_page.css_class
+
+%p
+  %strong Nav Text:
+  = @cms_page.nav_text
+
+%p
+  %strong Meta Keywords:
+  = @cms_page.meta_keywords
+
+%p
+  %strong Meta Description:
+  = @cms_page.meta_description
+
+%p
+  = link_to "Edit", edit_cms_page_path(@cms_page) 
+  \|
+  = link_to "Destroy", @cms_page, :confirm => 'Are you sure?', :method => :delete 
+  \|
+  = link_to "View All", cms_pages_path
+

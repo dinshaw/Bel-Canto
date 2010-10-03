@@ -2,7 +2,9 @@
 %html
   %head
     %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon"}
-    %title= "Bel Canto :: "+controller.controller_name.capitalize
+    %title= head_title    
+    %meta{:name => :description, :content => meta_description}
+    %meta{:name => :keywords, :content => meta_keywords}    
     = include_javascripts :common
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
@@ -10,14 +12,13 @@
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
 
     = csrf_meta_tag
-    = yield(:head)
 
 %body#bel_canto.bp.two-col
 
   #container
 
     #header
-      %h1 The Art of Bel Canto
+      #site_name The Art of Bel Canto
 
     #sidebar
       %ul
@@ -27,15 +28,17 @@
           %a{:href => schedule_path} Schedule
 
     #content
-      = content_tag :h1, yield(:title) if show_title?
-    
+      %h1= @cms_page.title
+      %p.sub_title= @cms_page.sub_title
+
       - flash.each do |name, msg|
         = content_tag :div, msg, :id => "flash_#{name}"
-  
+      
+      = @cms_page.body
+      
       = yield
-  
+
     .push
-  
+
   #footer
     2010 | Contact
-    

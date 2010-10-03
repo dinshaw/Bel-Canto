@@ -1,0 +1,23 @@
+one:
+  key: MyString
+  css_class: MyString
+  title: MyString
+  sub_title: MyString
+  nav_text: MyString
+  body: MyText
+  meta_keywords: MyText
+  meta_description: MyText
+  position: 1
+  parent_id: 1
+
+two:
+  key: MyString
+  css_class: MyString
+  title: MyString
+  sub_title: MyString
+  nav_text: MyString
+  body: MyText
+  meta_keywords: MyText
+  meta_description: MyText
+  position: 1
+  parent_id: 1

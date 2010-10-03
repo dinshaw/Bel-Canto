@@ -1,4 +1,6 @@
 Belcanto::Application.routes.draw do
+  resources :cms_pages
+
   get "home/index"
 
   match 'schedule' => 'home#schedule', :as => :schedule

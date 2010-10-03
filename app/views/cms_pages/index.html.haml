@@ -1,0 +1,15 @@
+%table
+  %tr
+    %th Title
+    %th Key
+    %th Body
+  - for cms_page in @cms_pages
+    %tr{:class => cycle('even','odd')}
+      %td= cms_page.title
+      %td= cms_page.key
+      %td= cms_page.body
+      %td= link_to "Show", cms_page
+      %td= link_to "Edit", edit_cms_page_path(cms_page)
+      %td= link_to "Destroy", cms_page, :confirm => 'Are you sure?', :method => :delete
+
+%p= link_to "New Cms Page", new_cms_page_path

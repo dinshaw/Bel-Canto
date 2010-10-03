@@ -485,6 +485,12 @@ legend {
   padding: 0 10px;
 }
 
+/* line 37, ../../app/stylesheets/partials/_form.scss */
+textarea {
+  height: 100px;
+  width: 500px;
+}
+
 /* line 25, ../../app/stylesheets/partials/_layout.scss */
 body.two-col #container {
   width: 950px;

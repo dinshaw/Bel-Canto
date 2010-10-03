@@ -10,7 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101003030148) do
+ActiveRecord::Schema.define(:version => 20101003134500) do
+
+  create_table "cms_pages", :force => true do |t|
+    t.string   "key"
+    t.string   "css_class"
+    t.string   "title"
+    t.string   "sub_title"
+    t.string   "nav_text"
+    t.text     "body"
+    t.text     "meta_keywords"
+    t.text     "meta_description"
+    t.integer  "position"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "phone_numbers", :force => true do |t|
     t.string   "kind"
