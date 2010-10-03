@@ -18,7 +18,14 @@ var eventData = {
 $(document).ready(function() {
 
 	$('#calendar').weekCalendar({
-		timeslotsPerHour: 4,
+	  businessHours : {start: 7, end: 22, limitDisplay : true},
+	  useShortDayNames: true,
+    timeslotHeight: 33,
+    defaultEventLength : 2,
+    timeslotsPerHour : 3,
+    daysToShow : 5,
+    dateFormat : "M d",
+		
 		height: function($calendar){
 			return $(window).height() - $("h1").outerHeight(true);
 		},
