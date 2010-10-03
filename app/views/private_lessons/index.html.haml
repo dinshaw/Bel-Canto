@@ -1,0 +1,15 @@
+%table
+  %tr
+    %th Student
+    %th Start time
+    %th End time
+  - for private_lesson in @private_lessons
+    %tr{:class => cycle('even','odd')}
+      %td= private_lesson.student.full_name
+      %td= private_lesson.start_time
+      %td= private_lesson.end_time
+      %td= link_to 'Show', private_lesson
+      %td= link_to 'Edit', edit_private_lesson_path(private_lesson)
+      %td= link_to 'Destroy', private_lesson, :confirm => 'Are you sure?', :method => :delete
+
+%p= link_to "New Private Lesson", new_private_lesson_path

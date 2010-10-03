@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101003134500) do
+ActiveRecord::Schema.define(:version => 20101003174212) do
 
   create_table "cms_pages", :force => true do |t|
     t.string   "key"
@@ -35,12 +35,10 @@ ActiveRecord::Schema.define(:version => 20101003134500) do
     t.datetime "updated_at"
   end
 
-  create_table "students", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.boolean  "admin"
-    t.boolean  "editor"
-    t.string   "state"
+  create_table "private_lessons", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

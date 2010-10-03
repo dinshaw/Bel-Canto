@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
   attr_accessor :state_transition
 
   has_many :phone_numbers
+  has_many :private_lessons  
   accepts_nested_attributes_for :phone_numbers, :allow_destroy => true,
     :reject_if => proc { |attributes| attributes['number'].blank? }
 

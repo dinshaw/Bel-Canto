@@ -14,6 +14,7 @@ gem 'has_scope'
 gem 'hoptoad_notifier', '>= 2.3.7'
 gem 'hpricot'
 gem 'jammit'
+gem 'rails3-jquery-autocomplete'
 gem 'nifty-generators'
 gem 'paperclip'
 gem 'ruby_parser' # needed for haml/compass pre

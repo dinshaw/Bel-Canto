@@ -1,8 +1,9 @@
 Belcanto::Application.routes.draw do
+  resources :private_lessons
+
   resources :cms_pages
 
   get "home/index"
-
   match 'schedule' => 'home#schedule', :as => :schedule
 
   devise_for :users
@@ -14,6 +15,9 @@ Belcanto::Application.routes.draw do
   resources :students do
     member do
       post 'transition'
+    end
+    collection do
+      get :autocomplete_user_first_name
     end
   end
   # Sample of regular route:

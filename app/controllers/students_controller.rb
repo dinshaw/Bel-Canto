@@ -1,4 +1,5 @@
 class StudentsController < ApplicationController
+  autocomplete :user, :first_name, :display_value => :full_name
   before_filter :find_student, :only => [ :edit, :update, :transition]
   
   def create
