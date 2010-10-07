@@ -28,6 +28,13 @@
           %a{:href => schedule_path} Schedule
         %li
           %a{:href => private_lessons_path} Lesson Times
+        %li
+          %a{:href => files_path} Files
+
+        - if current_user && current_user.admin?
+        %li
+          %a{:href => admin_path} Admin
+					
 
     #content
       %h1= @cms_page.title

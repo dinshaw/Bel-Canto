@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   include ActiveRecord::Transitions
 
   state_machine do
+    # Note: The order of these states can not be changed.  If a new state is to be
+    # added, add it to the bottom or the access_mask will break.
     state :trial # first one is initial state
     state :student
     state :advanced
@@ -46,7 +48,8 @@ class User < ActiveRecord::Base
   attr_accessor :state_transition
 
   has_many :phone_numbers
-  has_many :private_lessons  
+  has_many :private_lessons
+  has_and_belongs_to_many :files, :class_name => 'Upload'
   accepts_nested_attributes_for :phone_numbers, :allow_destroy => true,
     :reject_if => proc { |attributes| attributes['number'].blank? }
 
@@ -71,5 +74,13 @@ class User < ActiveRecord::Base
   
   def display_state
     state.titleize
+  end
+  
+  def self.states
+    state_machine.states.map(&:name).map(&:to_s)
+  end
+  
+  def accessible_files
+    @accessible_files ||= files
   end
 end

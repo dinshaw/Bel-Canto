@@ -1,0 +1,7 @@
+<% if @uploads.empty? %>
+	You do not have access to any downloads.
+<% end %>
+
+<% @uploads.each do |upload| %>
+	<%= link_to upload.label, download_file_path(upload) if upload.accessible_to?(current_user) %>
+<% end %>

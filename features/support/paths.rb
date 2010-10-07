@@ -10,6 +10,33 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
+      
+    when /the sign in page/
+      new_user_session_path
+      
+    when /the new file upload page/
+      new_admin_upload_path
+      
+    when /the file uploads page/
+      admin_uploads_path
+      
+    when /the file upload page for "(.+)"/
+      upload = Upload.find_by_label($1)
+      admin_upload_path(upload)
+      
+    when /the edit file upload page for "(.+)"/
+      upload = Upload.find_by_label($1)
+      edit_admin_upload_path(upload)
+      
+    when /the admin page/
+      admin_path
+      
+    when /the files page/
+      files_path
+      
+    when /the download page for "(.+)"/
+      upload = Upload.find_by_label($1)
+      upload.nil? ? download_file_path(:id => 1000) : download_file_path(upload)
 
     # added by pickle
     when /^#{capture_model}(?:'s)? page$/                           # eg. the forum's page

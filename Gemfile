@@ -24,6 +24,7 @@ gem 'resque_mailer'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'system_timer'
 gem 'transitions', :require => ['transitions', 'active_record/transitions']
+gem 'formtastic', '1.1.0'
 
 
 group :development, :test do

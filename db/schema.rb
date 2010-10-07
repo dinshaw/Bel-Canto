@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101003174212) do
+ActiveRecord::Schema.define(:version => 20101007183012) do
 
   create_table "cms_pages", :force => true do |t|
     t.string   "key"
@@ -39,6 +39,34 @@ ActiveRecord::Schema.define(:version => 20101003174212) do
     t.integer  "user_id"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "students", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.boolean  "admin"
+    t.boolean  "editor"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "uploads", :force => true do |t|
+    t.string   "label",                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.integer  "access_mask",       :default => 0, :null => false
+  end
+
+  create_table "uploads_users", :id => false, :force => true do |t|
+    t.integer  "upload_id",  :null => false
+    t.integer  "user_id",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
