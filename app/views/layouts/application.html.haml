@@ -32,17 +32,21 @@
           %a{:href => files_path} Files
 
         - if current_user && current_user.admin?
-        %li
-          %a{:href => admin_path} Admin
+          %li
+            %a{:href => admin_path} Admin
+
+        - if current_user && (current_user.admin? || current_user.editor?)
+          %li
+            %a{:href => cms_pages_path} Manage CMS Pages
 					
 
     #content
       %h1= @cms_page.title
       %p.sub_title= @cms_page.sub_title
 
-      - flash.each do |name, msg|
-        = content_tag :div, msg, :id => "flash_#{name}"
-      
+      %div#flash
+        = render 'shared/flashes'
+        
       = @cms_page.body
       
       = yield

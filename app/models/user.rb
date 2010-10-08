@@ -55,9 +55,17 @@ class User < ActiveRecord::Base
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
+  
+  
+  before_validation(:on => :create) { set_default_password }
+  
 
   def full_name
     [first_name, last_name].join(' ')
+  end
+  
+  def reverse_name
+    [last_name, first_name].join(', ')
   end
 
   def promotable?
@@ -82,5 +90,18 @@ class User < ActiveRecord::Base
   
   def accessible_files
     @accessible_files ||= files
+  end
+  
+  def self.new_with_phone_numbers
+    if user = new
+      2.times { user.phone_numbers.build } 
+    end
+    user
+  end
+  
+  private
+  
+  def set_default_password
+    self.password = self.password_confirmation = ActiveSupport::SecureRandom.base64(8) if password.blank? # Password should always be blank, but checked needed for Factory Girl
   end
 end

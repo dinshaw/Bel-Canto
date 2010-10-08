@@ -1,0 +1,25 @@
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Phone Numbers</th>
+		<th>Type</th>
+		<th></th>
+	</tr>
+	<% if @students.empty? %>
+		<tr><td colspan="4">There are currently no students</td></tr>
+	<% end %>
+	
+	<% @students.each do |student| %>
+	<tr>
+		<td style="vertical-align: top"><%= student.reverse_name %></td>
+		<td style="vertical-align: top"><%= mail_to student.email %></td>
+		<td style="vertical-align: top"><%= student.phone_numbers.map(&:formatted_number).join('<br />').html_safe %></td>
+		<td style="vertical-align: top"><%= student.state %></td>
+		<td style="vertical-align: top"><%= link_to 'Edit', edit_student_path(student) if current_user == student %></td>
+	</tr>
+	<% end %>
+</table>
+
+<%= will_paginate @students %>
+  

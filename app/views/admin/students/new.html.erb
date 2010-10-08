@@ -1,0 +1,18 @@
+<%= semantic_form_for [:admin, @student], :url => admin_students_path do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :first_name, :label => 'First Name' %>
+    <%= f.input :last_name, :label => 'Last Name' %>
+    <%= f.input :email %>
+    <%= f.input :admin %>
+    <%= f.input :editor %>  
+  <% end %>
+  <%= f.semantic_fields_for :phone_numbers do |p| %>
+		<%= render 'phone_number_fields', :builder => p %>
+  <% end %>
+  <div><%= link_to_add_fields "Add another phone number", f, :phone_numbers, '', :id => 'addField' %></div>
+  <%= f.buttons do %>
+    <%= f.commit_button 'Submit' %>
+  <% end %>
+<% end %>
+
+<%= render 'navigation' %>

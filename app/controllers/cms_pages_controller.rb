@@ -1,4 +1,6 @@
 class CmsPagesController < ApplicationController
+  before_filter :authenticate_user!, :validate_access!
+  
   def index
     @cms_pages = CmsPage.all
   end
@@ -40,5 +42,15 @@ class CmsPagesController < ApplicationController
     @cms_page.destroy
     flash[:notice] = "Successfully destroyed cms page."
     redirect_to cms_pages_url
+  end
+  
+  
+  private
+  
+  def validate_access!
+    unless current_user.admin? || current_user.editor?
+      flash[:alert] = "You are not authorized to access the requested page."
+      redirect_to root_path
+    end
   end
 end

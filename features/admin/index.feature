@@ -16,4 +16,11 @@ Feature: Admin index
 		When I go to the admin page
 		And I follow "Manage File Uploads"
 		Then I should be on the file uploads page
+		
+		
+	Scenario: Access to manage students section
+  	Given I am signed in as an admin
+  	When I go to the admin page
+  	And I follow "Manage Students"
+  	Then I should be on the manage students page
 	

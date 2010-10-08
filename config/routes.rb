@@ -12,14 +12,7 @@ Belcanto::Application.routes.draw do
   # first created -> highest priority.
   root :to => "home#index"
 
-  resources :students do
-    member do
-      post 'transition'
-    end
-    collection do
-      get :autocomplete_user_first_name
-    end
-  end
+  resources :students, :only => [:index, :edit, :update]
   
   resources :files, :only => [:index] do
     member do
@@ -30,5 +23,10 @@ Belcanto::Application.routes.draw do
   namespace :admin do
     get '/', :to => "base#index"
     resources :uploads
+    resources :students do
+      member do
+        get :transition
+      end
+    end
   end
 end
