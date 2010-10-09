@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   
   before_filter :get_cms_page
 
+  autocomplete :user, :first_name
+  
   def get_cms_page
     controller = self.controller_name.titleize
     # Admin user should not need to differentiate between edit / update and new / create

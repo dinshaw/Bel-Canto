@@ -493,7 +493,7 @@ textarea {
 
 /* line 25, ../../app/stylesheets/partials/_layout.scss */
 body.two-col #container {
-  width: 950px;
+  width: 1350px;
   margin: 0 auto;
   overflow: hidden;
   *zoom: 1;
@@ -503,7 +503,7 @@ body.two-col #header, body.two-col #footer {
   display: inline;
   float: left;
   margin-right: 10px;
-  width: 950px;
+  width: 1350px;
 }
 /* line 139, ../../../../.rvm/gems/ree-1.8.7-2010.02/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html body.two-col #header, * html body.two-col #footer {
@@ -514,25 +514,28 @@ body.two-col #sidebar {
   display: inline;
   float: left;
   margin-right: 10px;
-  width: 110px;
+  width: 216.667px;
+  padding-right: 32px;
+  margin-right: 33px;
+  border-right: 1px solid #cccccc;
 }
 /* line 139, ../../../../.rvm/gems/ree-1.8.7-2010.02/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html body.two-col #sidebar {
   overflow-x: hidden;
 }
-/* line 33, ../../app/stylesheets/partials/_layout.scss */
+/* line 35, ../../app/stylesheets/partials/_layout.scss */
 body.two-col #content {
   display: inline;
   float: left;
   margin-right: 0;
-  width: 790px;
+  width: 1066.667px;
 }
 /* line 139, ../../../../.rvm/gems/ree-1.8.7-2010.02/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html body.two-col #content {
   overflow-x: hidden;
 }
 
-/* line 41, ../../app/stylesheets/partials/_layout.scss */
+/* line 43, ../../app/stylesheets/partials/_layout.scss */
 #footer {
   text-align: center;
 }
@@ -3026,3 +3029,184 @@ table.wc-time-slots {
 }
 
 /* IE7 hacks */
+/* line 2, ../../app/stylesheets/partials/_site_header.scss */
+#header #site_name {
+  font-size: 4em;
+}
+/* line 5, ../../app/stylesheets/partials/_site_header.scss */
+#header .tag_line {
+  font-style: italic;
+  font-size: 1.5em;
+}
+
+/* line 2, ../../app/stylesheets/partials/_nav.scss */
+#sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 8, ../../app/stylesheets/partials/_nav.scss */
+#sidebar li {
+  border-bottom: 1px solid #cccccc;
+}
+/* line 10, ../../app/stylesheets/partials/_nav.scss */
+#sidebar li a {
+  display: block;
+  padding: 3px 5px;
+  text-decoration: none;
+}
+/* line 15, ../../app/stylesheets/partials/_nav.scss */
+#sidebar li a:hover {
+  background-color: #cccccc;
+}
+
+/* colors */
+/* line 3, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-container {
+  border-left: 5px solid #BBCCFF;
+}
+
+/* line 6, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-toolbar {
+  background: #BBCCFF;
+  border: none;
+}
+
+/* line 10, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-header {
+  background: #E3E9FF;
+  border: none;
+  border-bottom: 2px solid #BBCCFF;
+}
+
+/* line 15, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-hour-end {
+  color: #666666;
+  border-color: #ccc;
+}
+
+/* line 19, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-hour-header {
+  color: #666666;
+  border-color: #ccc;
+  background: #F6F9FC;
+}
+
+/* line 24, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-grid-timeslot-header, .wc-business-hours {
+  background: #F6F9FC;
+}
+
+/*calendar*/
+/* line 29, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-day-column-first, .wc-day-column-last, .wc-day-column-middle, .wc-time-slot {
+  border-color: #ccc;
+}
+
+/* line 33, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-header .wc-day-column-header.wc-today {
+  background-color: #FAD163;
+  border-right: 3px solid #FAD163;
+  border-left: 3px solid #FAD163;
+}
+/* line 37, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-header .wc-today.wc-user-header {
+  font-weight: normal;
+}
+
+/* line 41, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-today.wc-day-column-last {
+  border-right: 3px double #FAD163;
+}
+/* line 43, ../../app/stylesheets/partials/_schedule_gcal.scss */
+.wc-today.wc-day-column-first {
+  border-left: 3px double #FAD163;
+}
+
+/*
+ * SimpleModal Basic Modal Dialog
+ * http://www.ericmmartin.com/projects/simplemodal/
+ * http://code.google.com/p/simplemodal/
+ *
+ * Copyright (c) 2010 Eric Martin - http://ericmmartin.com
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Revision: $Id: basic.css 242 2010-03-14 00:55:02Z emartin24 $
+ *
+ */
+/* line 15, ../../app/stylesheets/partials/_simple_modal.scss */
+#basic-modal-content {
+  display: none;
+}
+
+/* Overlay */
+/* line 20, ../../app/stylesheets/partials/_simple_modal.scss */
+#simplemodal-overlay {
+  background-color: #000;
+  cursor: wait;
+}
+
+/* Container */
+/* line 26, ../../app/stylesheets/partials/_simple_modal.scss */
+#simplemodal-container {
+  height: 320px;
+  width: 600px;
+  color: #bbb;
+  background-color: #333;
+  border: 4px solid #444;
+  padding: 12px;
+}
+/* line 33, ../../app/stylesheets/partials/_simple_modal.scss */
+#simplemodal-container code {
+  background: #141414;
+  border-left: 3px solid #65B43D;
+  color: #bbb;
+  display: block;
+  margin-bottom: 12px;
+  padding: 4px 6px 6px;
+}
+/* line 40, ../../app/stylesheets/partials/_simple_modal.scss */
+#simplemodal-container a {
+  color: #ddd;
+}
+/* line 42, ../../app/stylesheets/partials/_simple_modal.scss */
+#simplemodal-container a.modalCloseImg {
+  background: url(../img/basic/x.png) no-repeat;
+  width: 25px;
+  height: 29px;
+  display: inline;
+  z-index: 3200;
+  position: absolute;
+  top: -15px;
+  right: -16px;
+  cursor: pointer;
+}
+/* line 52, ../../app/stylesheets/partials/_simple_modal.scss */
+#simplemodal-container #basic-modal-content {
+  padding: 8px;
+}
+
+/*
+ * SimpleModal Basic Modal Dialog
+ * http://www.ericmmartin.com/projects/simplemodal/
+ * http://code.google.com/p/simplemodal/
+ *
+ * Copyright (c) 2010 Eric Martin - http://ericmmartin.com
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Revision: $Id: basic_ie.css 238 2010-03-11 05:56:57Z emartin24 $
+ *
+ */
+/* IE 6 hacks */
+/* line 17, ../../app/stylesheets/partials/_simple_modal_ie.scss */
+#simplemodal-container a.modalCloseImg {
+  background: none;
+  right: -14px;
+  width: 22px;
+  height: 26px;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/basic/x.png',sizingMethod='scale');
+}

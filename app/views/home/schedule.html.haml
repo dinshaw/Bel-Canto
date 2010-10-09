@@ -1,1 +1,17 @@
 #calendar
+#basic-modal-content
+  %h2 New Lesson
+  - form_for PrivateLesson.new do |f|
+    = f.error_messages
+    %p
+      = f.label :student
+      = autocomplete_field_tag :student, '', autocomplete_user_first_name_students_path, :id_element => '#user_id'
+      = f.hidden_field :user_id, :id => :user_id
+    %p
+      = f.label :start_time
+      = f.datetime_select :start_time
+    %p
+      = f.label :end_time
+      = f.datetime_select :end_time
+    %p
+      = f.submit

@@ -2,9 +2,9 @@
 %html
   %head
     %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon"}
-    %title= head_title    
+    %title= head_title
     %meta{:name => :description, :content => meta_description}
-    %meta{:name => :keywords, :content => meta_keywords}    
+    %meta{:name => :keywords, :content => meta_keywords}
     = include_javascripts :common
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
@@ -19,6 +19,7 @@
 
     #header
       #site_name The Art of Bel Canto
+      %p.tag_line "Every breath is a new song."
 
     #sidebar
       %ul
@@ -38,7 +39,6 @@
         - if current_user && (current_user.admin? || current_user.editor?)
           %li
             %a{:href => cms_pages_path} Manage CMS Pages
-					
 
     #content
       %h1= @cms_page.title
@@ -46,9 +46,9 @@
 
       %div#flash
         = render 'shared/flashes'
-        
+
       = @cms_page.body
-      
+
       = yield
 
     .push

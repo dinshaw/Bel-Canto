@@ -2,7 +2,7 @@
 // Feel free to delete these if you want keep the defaults:
 
 $blueprint-grid-columns: 24;
-$blueprint-container-size: 950px;
+$blueprint-container-size: 1350px;
 $blueprint-grid-margin: 10px;
 $sticky-footer-height: 50px;
 
@@ -11,3 +11,4 @@ $sticky-footer-height: 50px;
 $blueprint-grid-width: ($blueprint-container-size + $blueprint-grid-margin) / $blueprint-grid-columns - $blueprint-grid-margin;
 
 $dark-border: #000;
+$light-border: #ccc;

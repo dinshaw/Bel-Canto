@@ -1,18 +1,19 @@
 Belcanto::Application.routes.draw do
-  resources :private_lessons
 
-  resources :cms_pages
-
+  root :to => "home#index"
   get "home/index"
   match 'schedule' => 'home#schedule', :as => :schedule
 
   devise_for :users
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-  root :to => "home#index"
+  resources :students, :only => [:index, :edit, :update] do 
+    collection do
+      get :autocomplete_user_first_name
+    end
+  end
 
-  resources :students, :only => [:index, :edit, :update]
+  resources :private_lessons
+  resources :cms_pages
   
   resources :files, :only => [:index] do
     member do
