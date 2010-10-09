@@ -1,60 +1,31 @@
 class StudentsController < ApplicationController
-  autocomplete :user, :first_name, :display_value => :full_name
-  before_filter :find_student, :only => [ :edit, :update, :transition]
-  
-  def create
-    @student = User.new(with_default_password(params[:user]))
-    if @student.save
-      flash[:notice] = "Successfully created student."
-      redirect_to students_url
-    else
-      build_phone_numbers
-      render :action => 'new'
-    end
-  end
-
-  def edit
-    build_phone_numbers
-  end
+  before_filter :authenticate_user!
+  before_filter :find_student, :validate_owner!, :only => [:edit, :update]
   
   def index
-    @students = User.all
-  end
-  
-  def new
-    @student = User.new
-    build_phone_numbers
-  end
-  
-  def transition
-    @student.send([params[:transtion_to],'!'].join.to_sym)
-    redirect_to request.referrer
+    @students = User.paginate :page => params[:page] || 1, :order => 'last_name asc, first_name asc'
   end
   
   def update
     if @student.update_attributes(params[:user])
-      flash[:notice] = "Successfully updated student."
-      redirect_to students_url
+      flash[:notice] = "Your student record was successfully updated"
+      redirect_to students_path
     else
-      build_phone_numbers
-      render :action => 'edit'
+      render :action => "edit"
     end
   end
-    
-private
-
-  def build_phone_numbers
-    count = @student.phone_numbers.count
-    count > 0 ? @student.phone_numbers.build :
-      2.times { @student.phone_numbers.build }
-  end
+  
+  
+  private
+  
   def find_student
     @student = User.find(params[:id])
   end
   
-  def with_default_password(params)
-    passwd = ActiveSupport::SecureRandom.base64(8)
-    params.merge(:password => passwd,:confirm_password => passwd)
+  def validate_owner!
+    unless current_user == @student || current_user.admin?
+      flash[:alert] = "You are not authorized to edit this student record."
+      redirect_to students_path
+    end
   end
-  
 end

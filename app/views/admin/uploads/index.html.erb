@@ -16,7 +16,7 @@
 		<td><%= upload.access.join(', ') %></td>
 		<td><%= upload.users.map(&:full_name).join(', ') %></td>
 		<td><%= link_to 'Edit', edit_admin_upload_path(upload) %></td>
-		<td><%= link_to 'Remove', admin_upload_path(upload), :method => :delete, :confirm => "Are you sure?" %>
+		<td><%= link_to 'Remove', admin_upload_path(upload), :method => :delete, :confirm => "Are you sure?" %></td>
 	</tr>
 	<% end %>
 </table>

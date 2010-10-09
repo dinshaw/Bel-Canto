@@ -37,6 +37,24 @@ module NavigationHelpers
     when /the download page for "(.+)"/
       upload = Upload.find_by_label($1)
       upload.nil? ? download_file_path(:id => 1000) : download_file_path(upload)
+      
+    when /the manage students page/
+      admin_students_path
+      
+    when /the new student page/
+      new_admin_student_path
+      
+    when /the admin show student page for "(.+)"/
+      student = User.find_by_email($1)
+      admin_student_path(student)
+
+    when /the admin edit student page for "(.+)"/
+      student = User.find_by_email($1)
+      edit_admin_student_path(student)
+      
+    when /that student's edit page/
+      student = User.last
+      edit_student_path(student)
 
     # added by pickle
     when /^#{capture_model}(?:'s)? page$/                           # eg. the forum's page

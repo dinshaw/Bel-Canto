@@ -10,6 +10,15 @@ Factory.define :user do |user|
   user.first_name 'Joe'
   user.last_name  'Student'
   user.state 'student'
+  user.admin false
+  user.editor false
+end
+
+
+Factory.define :phone_number do |phone_number|
+  phone_number.user {|a| a.association(:user) }
+  phone_number.kind 'Work'
+  phone_number.number '2222222222'
 end
 
 
