@@ -43,16 +43,6 @@ ActiveRecord::Schema.define(:version => 20101007183012) do
     t.datetime "updated_at"
   end
 
-  create_table "students", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.boolean  "admin"
-    t.boolean  "editor"
-    t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "uploads", :force => true do |t|
     t.string   "label",                            :null => false
     t.datetime "created_at"

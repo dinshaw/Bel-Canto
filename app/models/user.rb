@@ -53,8 +53,8 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :phone_numbers, :allow_destroy => true,
     :reject_if => proc { |attributes| attributes['number'].blank? }
 
-  validates :first_name, :presence => true
-  validates :last_name, :presence => true
+  # validates :first_name, :presence => true
+  # validates :last_name, :presence => true
 
   def full_name
     [first_name, last_name].join(' ')
