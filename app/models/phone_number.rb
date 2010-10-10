@@ -1,5 +1,7 @@
 class PhoneNumber < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
+
+  KINDS = ['Mobile', 'Home', 'Work', 'Mother', 'Father', 'Other']
   
   belongs_to :user
   

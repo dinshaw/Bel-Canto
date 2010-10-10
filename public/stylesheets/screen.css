@@ -329,7 +329,7 @@ body.bp .bottom {
 }
 /* line 8, ../../../../.rvm/gems/ree-1.8.7-2010.02/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_debug.scss */
 body.bp .showgrid {
-  background: url('/images/grid.png?1286139318');
+  background: url('/images/grid.png?1285956274');
 }
 /* line 4, ../../../../.rvm/gems/ree-1.8.7-2010.02/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_interaction.scss */
 body.bp .error {
@@ -389,6 +389,7 @@ body.bp .removed {
   color: white;
 }
 
+/******** General *******/
 /* line 18, ../../../../.rvm/gems/ree-1.8.7-2010.02/gems/compass-0.10.5/frameworks/blueprint/stylesheets/blueprint/_form.scss */
 form.bp label {
   font-weight: bold;
@@ -451,44 +452,51 @@ form.bp textarea {
   height: 250px;
 }
 
-/* line 8, ../../app/stylesheets/partials/_form.scss */
+/* line 5, ../../app/stylesheets/partials/_form.scss */
 label {
   display: block;
 }
 
-/* line 10, ../../app/stylesheets/partials/_form.scss */
-.left_float_item, .check_box input, .phone_number *, fieldset form {
+/* line 7, ../../app/stylesheets/partials/_form.scss */
+.left_float_item, .check_box input, fieldset form, .phone_number * {
   float: left;
   margin-right: 10px;
 }
 
-/* line 14, ../../app/stylesheets/partials/_form.scss */
+/* line 11, ../../app/stylesheets/partials/_form.scss */
 .check_box {
   clear: both;
   margin-top: 10px;
 }
 
-/* line 20, ../../app/stylesheets/partials/_form.scss */
-.phone_number {
-  clear: both;
-  float: left;
-}
-
-/* line 26, ../../app/stylesheets/partials/_form.scss */
+/* line 17, ../../app/stylesheets/partials/_form.scss */
 fieldset {
   border: 1px solid black;
   padding: 10px;
 }
 
-/* line 33, ../../app/stylesheets/partials/_form.scss */
+/* line 24, ../../app/stylesheets/partials/_form.scss */
 legend {
   padding: 0 10px;
 }
 
-/* line 37, ../../app/stylesheets/partials/_form.scss */
+/* line 28, ../../app/stylesheets/partials/_form.scss */
 textarea {
   height: 100px;
   width: 500px;
+}
+
+/******** Association fields *******/
+/* line 34, ../../app/stylesheets/partials/_form.scss */
+.add_field {
+  clear: both;
+}
+
+/******** Student *******/
+/* line 38, ../../app/stylesheets/partials/_form.scss */
+.phone_number {
+  clear: both;
+  float: left;
 }
 
 /* line 25, ../../app/stylesheets/partials/_layout.scss */
@@ -3173,7 +3181,7 @@ table.wc-time-slots {
 }
 /* line 42, ../../app/stylesheets/partials/_simple_modal.scss */
 #simplemodal-container a.modalCloseImg {
-  background: url(../img/basic/x.png) no-repeat;
+  background: url(/images/x.png) no-repeat;
   width: 25px;
   height: 29px;
   display: inline;

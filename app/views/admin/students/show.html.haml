@@ -1,0 +1,22 @@
+
+%p
+  = @student.full_name
+%p
+  = mail_to @student.email
+%p
+  = phone_numbers_list @student
+  
+- if admin?
+  %p
+    Admin: 
+    = is? @student.admin
+  %p
+    Editor:
+    = is? @student.editor
+  %p
+    Type:
+    = form_tag do
+      = hidden_field_tag 'student_id', @student.id
+      = select_tag '#', options_for_select(User.states, @student.state), :class => 'state_select_dropdown', :id => "state_select_dropdown_#{@student.id}"
+    
+= render 'navigation'

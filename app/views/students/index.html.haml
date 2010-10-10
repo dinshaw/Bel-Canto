@@ -1,0 +1,18 @@
+%table
+  %tr
+    %th Name
+    %th Email
+    %th Phone Numbers
+    %th Type
+    %th
+  - if @students.empty?
+    %tr
+      %td{:colspan => "4"} There are currently no students
+  - @students.each do |student|
+    %tr{:class => cycle('even','odd')}
+      %td{:style => "vertical-align: top"}= student.reverse_name
+      %td{:style => "vertical-align: top"}= mail_to student.email
+      %td{:style => "vertical-align: top"}= student.phone_numbers.map(&:formatted_number).join('<br />').html_safe
+      %td{:style => "vertical-align: top"}= student.state
+      %td{:style => "vertical-align: top"}= link_to 'Edit', edit_student_path(student) if current_user == student
+= will_paginate @students

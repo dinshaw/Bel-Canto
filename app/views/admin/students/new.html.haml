@@ -1,0 +1,4 @@
+= simple_form_for [:admin, @student], :url => admin_students_path, :html => {:class => :associations} do |f|
+  = render 'admin/students/form', :f => f
+  
+= render 'navigation'

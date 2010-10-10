@@ -1,7 +1,4 @@
-// Only apply the blueprint form styles to forms with
-// a class of "bp". This makes it easier to style
-// forms from scratch if you need to.
-
+/******** General *******/
 form.bp {
   @include blueprint-form; }
 
@@ -15,12 +12,6 @@ label{display:block;}
   clear: both;  
   margin-top:10px;
   input{ @extend .left_float_item}
-}
-
-.phone_number {
-  clear: both;
-  float:left;
-  * { @extend .left_float_item }
 }
 
 fieldset{
@@ -38,3 +29,15 @@ textarea{
   height:100px;
   width:500px;  
 }
+
+/******** Association fields *******/
+.add_field{
+  clear:both;
+}
+/******** Student *******/
+.phone_number {
+  clear: both;
+  float:left;
+  * { @extend .left_float_item }
+}
+

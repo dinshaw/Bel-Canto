@@ -1,0 +1,32 @@
+%table
+  %tr
+    %th Name
+    %th Email
+    %th Phone Numbers
+    %th Admin
+    %th Editor
+    %th Type
+    %th
+    %th
+  - if @students.empty?
+    %tr
+      %td{:colspan => "4"} There are currently no students
+  - @students.each do |student|
+    %tr{:class => cycle('even','odd')}
+      %td= link_to student.reverse_name, admin_student_path(student)
+      %td= mail_to student.email
+      %td= phone_numbers_list student
+      %td= is? student.admin
+      %td= is? student.editor
+      %td
+        = form_tag do
+          = hidden_field_tag 'student_id', student.id
+          = select_tag '#', options_for_select(User.states, student.state), 
+            :class => 'state_select_dropdown', 
+            :id => "state_select_dropdown_#{student.id}"
+      %td= link_to 'Edit', edit_admin_student_path(student)
+      %td= link_to 'Remove', admin_student_path(student), :method => :delete, :confirm => "Are you sure?"
+
+= will_paginate @students
+
+= render 'navigation'

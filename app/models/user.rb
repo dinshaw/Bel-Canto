@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   
   def self.new_with_phone_numbers
     if user = new
-      2.times { user.phone_numbers.build } 
+      user.phone_numbers.build
     end
     user
   end

@@ -1,0 +1,6 @@
+%p
+  = link_to '[Student List]', admin_students_path
+  = link_to '[Add New Student]', new_admin_student_path
+  - if @student and not @student.new_record?
+    = link_to '[Edit This Student]', edit_admin_student_path(@student)
+    = link_to '[Delete This Student]', admin_student_path(@student), :method => :delete, :confirm => "Are you sure?"

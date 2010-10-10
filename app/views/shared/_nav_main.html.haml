@@ -1,0 +1,22 @@
+%ul
+  %li
+    %a{:href => schedule_path} Schedule
+  %li
+    %a{:href => files_path} Downloads
+  %li
+    %a{:href => students_path} Students
+    
+  - if admin? 
+    %li
+      %a{:href => admin_students_path} Manage Students
+    %li
+      %a{:href => admin_uploads_path} Manage File Uploads
+    %li
+
+  - if editor?
+    %li
+      %a{:href => cms_pages_path} Manage CMS Pages
+
+  - if !current_user
+    %li
+      %a{:href => new_user_session_path} Log in
