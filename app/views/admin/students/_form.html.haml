@@ -7,12 +7,11 @@
 
 = f.simple_fields_for :phone_numbers do |ff|
   .phone_number
-    = ff.input :user_id, :as => :hidden
     = ff.input :kind, :collection => PhoneNumber::KINDS, :include_blank => false
     = ff.input :number
     %p.remove_field
-      = ff.check_box '_destroy'
-      = ff.label '_destroy', 'Delete'
+      = ff.check_box :_destroy
+      = ff.label :_destroy, 'Delete'
 
 %p.add_field
   %a{'data-field-group' => '.phone_number', 'data-class' => :user, 'data-association' => 'phone_numbers', :href => '#'} Add another phone number
