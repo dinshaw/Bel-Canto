@@ -7,6 +7,10 @@
       form_with_associations.find('.add_field a').click(function(){
         add_fields_link_handler($(this));
       });
+      
+      form_with_associations.find('.remove_field a').click(function(){
+        remove_fields_link_handler($(this));
+      });
     }
   }
 
@@ -16,7 +20,7 @@
     field_groups = form_with_associations.find($context.attr('data-field-group'));
     last_group = field_groups.last();
     new_group = last_group.clone();
-    new_group.resetForm();
+    new_group.clearForm();
     count = field_groups.size();
 
     new_group.find('input, select, textarea, label').each(function(){
@@ -25,8 +29,14 @@
     });
 
     last_group.after(new_group);
+    return false;
   };
 
+  function remove_fields_link_handler($context) {
+    form_with_associations.find($context.attr('data-field-group')).remove();
+    return false;
+  }
+  
   function replace_ids($el, $context, count) {
     pattern = [$context.attr('data-class'), $context.attr('data-association'), 'attributes'].join('_');
     old_val = pattern+'_'+(count-1);

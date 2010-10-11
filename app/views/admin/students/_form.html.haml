@@ -10,8 +10,8 @@
     = ff.input :user_id, :as => :hidden
     = ff.input :kind, :collection => PhoneNumber::KINDS, :include_blank => false
     = ff.input :number
-    %p
-      = link_to 'Remove', 'Remove', :confirm => 'Remove?', :class => 'Remove phone number?'
+    %p.remove_field
+      = link_to 'Remove', '#', :confirm => 'Remove?'
 
 %p.add_field
   %a{'data-field-group' => '.phone_number', 'data-class' => :user, 'data-association' => 'phone_numbers', :href => '#'} Add another phone number

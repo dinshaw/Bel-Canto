@@ -29,7 +29,6 @@ class Admin::StudentsController < Admin::BaseController
     end
   end
   
-  
   def destroy
     if @student.destroy
       flash[:notice] = "The student was successfully removed"
@@ -37,13 +36,9 @@ class Admin::StudentsController < Admin::BaseController
     end
   end
   
-  
   def transition
-    if @student.update_attribute(:state, params[:transition])
-      flash[:notice] = "#{@student.full_name}'s state has been successfully updated to #{params[:transition]}"
-    end
+    @student.send([params[:transition],'!'].join)
   end
-
 
   private
 

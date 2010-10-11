@@ -15,8 +15,7 @@ class StudentsController < ApplicationController
     end
   end
   
-  
-  private
+private
   
   def find_student
     @student = User.find(params[:id])
