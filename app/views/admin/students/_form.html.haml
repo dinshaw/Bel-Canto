@@ -11,7 +11,8 @@
     = ff.input :kind, :collection => PhoneNumber::KINDS, :include_blank => false
     = ff.input :number
     %p.remove_field
-      = link_to 'Remove', '#', :confirm => 'Remove?'
+      = ff.check_box '_destroy'
+      = ff.label '_destroy', 'Delete'
 
 %p.add_field
   %a{'data-field-group' => '.phone_number', 'data-class' => :user, 'data-association' => 'phone_numbers', :href => '#'} Add another phone number

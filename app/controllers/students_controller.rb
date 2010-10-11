@@ -5,6 +5,10 @@ class StudentsController < ApplicationController
   def index
     @students = User.paginate :page => params[:page] || 1, :order => 'last_name asc, first_name asc'
   end
+
+  def edit
+    @student.phone_numbers.build if @student.phone_numbers.size == 0
+  end
   
   def update
     if @student.update_attributes(params[:user])

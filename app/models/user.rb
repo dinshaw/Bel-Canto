@@ -47,19 +47,18 @@ class User < ActiveRecord::Base
 
   attr_accessor :state_transition
 
-  has_many :phone_numbers
   has_many :private_lessons
-  has_and_belongs_to_many :files, :class_name => 'Upload'
+  has_many :phone_numbers
   accepts_nested_attributes_for :phone_numbers, :allow_destroy => true,
     :reject_if => proc { |attributes| attributes['number'].blank? }
-
+    
+  has_and_belongs_to_many :files, :class_name => 'Upload'
+  
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   
-  
   before_validation(:on => :create) { set_default_password }
   
-
   def full_name
     [first_name, last_name].join(' ')
   end
