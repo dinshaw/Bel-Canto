@@ -7,7 +7,16 @@ var day = new Date().getDate();
 $(document).ready(function() {
 
 	$('#calendar').weekCalendar({
-		timeslotsPerHour: 4,
+    timeFormat : "h:i a",
+    dateFormat : "M d, Y",
+    daysToShow : 5,
+    useShortDayNames: true,
+    businessHours : {start: 7, end: 24, limitDisplay : false},
+    newEventText : "New Lesson",
+    timeslotHeight: 20,
+    defaultEventLength : 2,
+    timeslotsPerHour : 3,
+    readonly: false,
 		height: function($calendar){
 			return $(window).height() - $("h1").outerHeight();
 		},
