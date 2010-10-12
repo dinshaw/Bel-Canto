@@ -1,0 +1,19 @@
+%table
+  %tr
+    %th Title
+    %th Access By Student Type
+    %th Access By Individual Student
+    %th
+    %th
+  - if @uploads.empty?
+    %tr
+      %td{:colspan => "4"} There are currently no uploads
+  - @uploads.each do |upload|
+    %tr{:class => cycle('even','odd')}
+      %td= link_to upload.title, admin_upload_path(upload)
+      %td= upload.access.join(', ')
+      %td= upload.users.map(&:full_name).join(', ')
+      %td= link_to 'Edit', edit_admin_upload_path(upload)
+      %td= link_to 'Remove', admin_upload_path(upload), :method => :delete, :confirm => "Are you sure?"
+
+= render 'navigation'

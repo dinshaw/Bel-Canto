@@ -2,7 +2,7 @@
 
 %script#private_lesson_modal_form{:type => "text/html"}
   #basic-modal-content
-    %h2 New Lesson
+    %h2 New Lesson {{start_time}} to {{end_time}}
     - form_for PrivateLesson.new do |f|
       = f.error_messages
       %p

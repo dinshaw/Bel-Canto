@@ -2,18 +2,29 @@
 = f.input :last_name
 = f.input :email
 
-= f.input :admin, :wrapper_html => {:class => :check_box}
-= f.input :editor, :wrapper_html => {:class => :check_box}
+- if admin?
+  = f.input :admin, :wrapper_html => {:class => :check_box}
+  = f.input :editor, :wrapper_html => {:class => :check_box}
 
-= f.simple_fields_for :phone_numbers do |ff|
-  .phone_number
-    = ff.input :kind, :collection => PhoneNumber::KINDS, :include_blank => false
-    = ff.input :number
-    %p.remove_field
-      = ff.check_box :_destroy
-      = ff.label :_destroy, 'Delete'
+%fieldset.nested_resource
+  %legend Phone Numbers
+  = f.simple_fields_for :phone_numbers do |ff|
+    .nested_resource_item
+      = ff.input :kind, :collection => PhoneNumber::KINDS, :include_blank => false
+      = ff.input :number
+      %p.remove_field
+        = ff.check_box :_destroy
+        = ff.label :_destroy, 'Delete'
 
-%p.add_field
-  %a{'data-field-group' => '.phone_number', 'data-class' => :user, 'data-association' => 'phone_numbers', :href => '#'} Add another phone number
+  %p.add_field
+    %a{:href => '#'} Add another phone number
+
+%fieldset
+  %legend Tape Access
+  - Upload.all.each do |file|
+    %p.check_box
+      - file_id = ['file',file.id].join('-')
+      = check_box_tag 'user[file_ids][]', file.id, @student.files.include?(file), :id => file_id
+      %label{:for => file_id}= file.title
 
 = f.submit

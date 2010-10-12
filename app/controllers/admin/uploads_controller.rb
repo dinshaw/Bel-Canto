@@ -1,17 +1,7 @@
-class Admin::UploadsController < Admin::BaseController
-  before_filter :find_upload, :only => [:show, :edit, :update, :destroy]
-  
-  def index
-    @uploads = Upload.all
-  end
-
-  def new
-    @upload = Upload.new
-  end
+class Admin::UploadsController < ApplicationController
+  load_and_authorize_resource
   
   def create
-    @upload = Upload.new(params[:upload])
-
     if @upload.save
       flash[:notice] = "Your file upload was successful"
       redirect_to admin_uploads_path
@@ -37,12 +27,5 @@ class Admin::UploadsController < Admin::BaseController
       flash[:notice] = "Your file upload was successfully removed"
       redirect_to admin_uploads_path
     end
-  end
-    
-  
-  private
-  
-  def find_upload
-    @upload = Upload.find(params[:id])
   end
 end

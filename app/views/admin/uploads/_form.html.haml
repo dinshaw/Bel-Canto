@@ -1,0 +1,13 @@
+= simple_form_for [:admin, @upload], :html => {:multipart => true} do |f|
+  = f.input :title
+  = f.input :file, :required => true, :as => :file
+
+  - User.states.each do |state|
+    - state_id = ['access',state].join('_')
+    %p.check_box
+      = check_box_tag 'upload[access][]', state, @upload.access.include?(state), :id => state_id
+      %label{:for => state_id}= state
+
+  = f.submit
+
+= render 'navigation'

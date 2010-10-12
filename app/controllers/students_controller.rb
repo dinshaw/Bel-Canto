@@ -8,6 +8,7 @@ class StudentsController < ApplicationController
 
   def edit
     @student.phone_numbers.build if @student.phone_numbers.size == 0
+    @student.files.build if @student.files.size == 0
   end
   
   def update
@@ -26,9 +27,6 @@ private
   end
   
   def validate_owner!
-    unless current_user == @student || current_user.admin?
-      flash[:alert] = "You are not authorized to edit this student record."
-      redirect_to students_path
-    end
+    authorize! :update, @student
   end
 end

@@ -1,0 +1,3 @@
+= link_to '[Upload List]', admin_uploads_path
+= link_to '[Add New Upload]', new_admin_upload_path
+= link_to '[Edit This Upload]', edit_admin_upload_path(@upload) if @upload and not @upload.new_record?

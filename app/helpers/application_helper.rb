@@ -8,6 +8,7 @@ module ApplicationHelper
   end
   
   def editor?
-    current_user && current_user.admin? || current_user.editor?
+    current_user && (current_user.admin? || current_user.editor?)
   end
+
 end

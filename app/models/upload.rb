@@ -4,11 +4,11 @@ class Upload < ActiveRecord::Base
   has_attached_file :file, :path => "#{Rails.root}/non-public/system/:attachment/:id/:style/:basename.:extension",
                            :url  => "/files/:to_param/download"
 
-  validates :label, :presence => true
+  validates :title, :presence => true
   validates_attachment_presence :file
   
   def to_param
-    "#{id}-#{label.parameterize}"
+    "#{id}-#{title.parameterize}"
   end
   
   def access=(access)

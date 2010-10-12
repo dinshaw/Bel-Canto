@@ -44,14 +44,14 @@ ActiveRecord::Schema.define(:version => 20101007183012) do
   end
 
   create_table "uploads", :force => true do |t|
-    t.string   "label",                            :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "title",                            :null => false
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
     t.integer  "access_mask",       :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "uploads_users", :id => false, :force => true do |t|

@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
          :token_authenticatable, :confirmable, :lockable and :timeoutable
 
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-                  :first_name, :last_name, :admin, :editor, :state, :phone_numbers_attributes
+                  :first_name, :last_name, :admin, :editor, :state, :phone_numbers_attributes, :file_ids
 
   attr_accessor :state_transition
 
@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
     :reject_if => proc { |attributes| attributes['number'].blank? }
     
   has_and_belongs_to_many :files, :class_name => 'Upload'
-  
+      
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   
@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
   def full_name
     [first_name, last_name].join(' ')
   end
+  alias to_label full_name
   
   def reverse_name
     [last_name, first_name].join(', ')
@@ -84,7 +85,7 @@ class User < ActiveRecord::Base
   end
   
   def self.states
-    state_machine.states.map(&:name).map(&:to_s)
+    state_machine.states.map(&:display_name)
   end
   
   def accessible_files

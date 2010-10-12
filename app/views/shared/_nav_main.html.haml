@@ -17,6 +17,9 @@
     %li
       %a{:href => cms_pages_path} Manage CMS Pages
 
-  - if !current_user
+  - if current_user
+    %li
+      %a{:href => destroy_user_session_path} Log out
+  - else
     %li
       %a{:href => new_user_session_path} Log in

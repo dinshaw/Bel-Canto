@@ -18,7 +18,13 @@ $(document).ready(function() {
 			}
 		},
 		eventNew : function(calEvent, $event) {
-		  $('#basic-modal-content').modal();
+		  var template = $('#private_lesson_modal_form').html();
+  	  var view = {
+  	    start_time: calEvent.start,
+  	    end_time: calEvent.end,
+  	  }
+  	  form =  Mustache.to_html(view, template);
+  	  form.modal();
 		},
 		eventDrop : function(calEvent, $event) {
 			displayMessage("<strong>Moved Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
@@ -46,5 +52,5 @@ $(document).ready(function() {
 	}
 
 	$("<div id=\"message\" class=\"ui-corner-all\"></div>").prependTo($("body"));
-	
+
 });

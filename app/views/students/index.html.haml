@@ -14,5 +14,5 @@
       %td{:style => "vertical-align: top"}= mail_to student.email
       %td{:style => "vertical-align: top"}= student.phone_numbers.map(&:formatted_number).join('<br />').html_safe
       %td{:style => "vertical-align: top"}= student.state
-      %td{:style => "vertical-align: top"}= link_to 'Edit', edit_student_path(student) if current_user == student
+      %td{:style => "vertical-align: top"}= link_to 'Edit', edit_student_path(student) if can?(:update, student)
 = will_paginate @students
