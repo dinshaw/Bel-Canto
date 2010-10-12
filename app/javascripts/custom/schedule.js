@@ -23,7 +23,7 @@ $(document).ready(function() {
   	    start_time: calEvent.start,
   	    end_time: calEvent.end,
   	  }
-  	  form =  Mustache.to_html(view, template);
+  	  form = $(Mustache.to_html(template, view));
   	  form.modal();
 		},
 		eventDrop : function(calEvent, $event) {

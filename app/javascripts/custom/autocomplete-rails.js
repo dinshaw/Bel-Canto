@@ -14,18 +14,24 @@
 *       <input type="text" autocomplete="/url/to/autocomplete" id_element="#id_field">
 */
 
-$(document).ready(function(){
-  $('input[data-autocomplete]').each(function(i){
-    $(this).autocomplete({
-      source: $(this).attr('data-autocomplete'),
-      select: function(event, ui) {
-        $(this).val(ui.item.value);
-        console.log($(this).attr('id_element'));
-        if ($(this).attr('id_element')) {
-          $($(this).attr('id_element')).val(ui.item.id);
+;(function($) {
+
+  function initialize() {
+    
+    $('input[data-autocomplete]').livequery(function() {
+      $(this).autocomplete({
+        source: $(this).attr('data-autocomplete'),
+        select: function(event, ui) {
+          $(this).val(ui.item.value);
+          if ($(this).attr('id_element')) {
+            $($(this).attr('id_element')).val(ui.item.id);
+          }
+          return false;
         }
-        return false;
-      }
+      });  
     });
-  });
-});
+  }
+
+  $(document).ready(initialize);
+
+})(jQuery);

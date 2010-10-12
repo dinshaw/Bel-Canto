@@ -1,5 +1,5 @@
-(function($) {
-  var add_link, collection, context, count, new_item
+;(function($) {
+  var add_link, collection, context, count, new_item;
 
   function initialize() {
     $context = $('form .nested_resource');
