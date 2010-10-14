@@ -16,7 +16,7 @@ class Upload < ActiveRecord::Base
   end
   
   def access
-    User.states.reject { |r| ((access_mask || 0) & 2**User.states.index(r)).zero? }
+    User.states.reject { |r| ( (access_mask || 0) & 2**User.states.index(r) ).zero? }
   end
   
   def accessible_to?(user)

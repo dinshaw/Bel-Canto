@@ -3156,8 +3156,8 @@ table.wc-time-slots {
 /* Container */
 /* line 26, ../../app/stylesheets/partials/_simple_modal.scss */
 #simplemodal-container {
-  height: 320px;
-  width: 600px;
+  height: 200px;
+  width: 300px;
   color: #bbb;
   background-color: #333;
   border: 4px solid #444;
@@ -3178,7 +3178,7 @@ table.wc-time-slots {
 }
 /* line 42, ../../app/stylesheets/partials/_simple_modal.scss */
 #simplemodal-container a.modalCloseImg {
-  background: url(/images/x.png) no-repeat;
+  background: url(/images/x.png) no-repeat !important;
   width: 25px;
   height: 29px;
   display: inline;
@@ -3195,6 +3195,12 @@ table.wc-time-slots {
 /* line 55, ../../app/stylesheets/partials/_simple_modal.scss */
 #simplemodal-container #basic-modal-content h2 {
   color: #fff;
+  margin: 0;
+}
+/* line 59, ../../app/stylesheets/partials/_simple_modal.scss */
+#simplemodal-container #basic-modal-content .time_slot {
+  margin: 0;
+  font-size: 1.5em;
 }
 
 /*

@@ -12,11 +12,11 @@ module CmsPagesHelper
   end
   
   def page_title
-    @title || @studnet.try(:full_name) || @cms_page.try(:title)
+    @title || @student.try(:full_name) || @cms_page.try(:title)
   end
 
   def page_sub_title
-    @cms_page.try(:sub_title)
+    @student ? nil : @cms_page.try(:sub_title)
   end
 
 end
