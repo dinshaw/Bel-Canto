@@ -21,9 +21,9 @@
   		  var template, view, form;
   		  template = $('#private_lesson_modal_form').html();
     	  view = {
-    	    start_date: calEvent.start.format('D, M jS'),
-    	    start_time: calEvent.start.format('g:i'),
-    	    end_time: calEvent.end.format('g:i a')
+    	    start_date: calEvent.start.toString('ddd, MMM dS'),
+    	    start_time: calEvent.start.toString('h:mm'),
+    	    end_time: calEvent.end.toString('h:mm tt')
     	  }
     	  form = $(Mustache.to_html(template, view));
     	  form.modal();
