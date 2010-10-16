@@ -16,11 +16,10 @@ class PrivateLessonsController < ApplicationController
     @private_lesson = PrivateLesson.new(params[:private_lesson])
     if @private_lesson.save
       flash[:notice] = "Successfully created private lesson."
-      redirect_to private_lessons_url
-    else
-      render :action => 'new'
     end
+    respond_with(@private_lesson)
   end
+  
   
   def edit
     @private_lesson = PrivateLesson.find(params[:id])

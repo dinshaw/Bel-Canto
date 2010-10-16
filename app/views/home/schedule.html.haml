@@ -6,7 +6,7 @@
     %p.time_slot {{start_date}}
     %p.time_slot {{start_time}} - {{end_time}}
     
-    - form_for PrivateLesson.new do |f|
+    - form_for PrivateLesson.new, :html => { :id => :private_lesson_form, :class => :async_form } do |f|
       = f.error_messages
       %p
         = f.label :student
