@@ -101,6 +101,8 @@ GEM
     jammit (0.5.3)
       closure-compiler (>= 0.1.0)
       yui-compressor (>= 0.9.1)
+    jquery-rails (0.2.4)
+      rails (~> 3.0)
     json (1.4.6)
     json_pure (1.4.6)
     launchy (0.3.7)
@@ -220,6 +222,7 @@ DEPENDENCIES
   hoptoad_notifier (>= 2.3.7)
   hpricot
   jammit
+  jquery-rails
   launchy
   nifty-generators
   paperclip

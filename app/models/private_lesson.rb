@@ -7,7 +7,7 @@ class PrivateLesson < ActiveRecord::Base
       :id => id,
       :start => start_time,
       :end => end_time,
-      :title => student.full_name
+      :title => student.try(:full_name)
     }.to_json
   end
 end

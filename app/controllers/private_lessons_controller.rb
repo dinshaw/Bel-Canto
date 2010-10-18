@@ -1,10 +1,10 @@
 class PrivateLessonsController < ApplicationController
-  respond_to :html, :json
+  respond_to :html, :json, :js
   
   def index
     @private_lessons = PrivateLesson.all
     respond_with(@private_lessons) do |format|
-      format.json { render :json => @private_lessons.map(&:to_json) }
+      format.js { render :json => @private_lessons.map(&:to_json) }
     end
   end
   
@@ -14,12 +14,9 @@ class PrivateLessonsController < ApplicationController
   
   def create
     @private_lesson = PrivateLesson.new(params[:private_lesson])
-    if @private_lesson.save
-      flash[:notice] = "Successfully created private lesson."
-    end
+    flash[:notice] = "User successfully created" if @private_lesson.save
     respond_with(@private_lesson)
   end
-  
   
   def edit
     @private_lesson = PrivateLesson.find(params[:id])
