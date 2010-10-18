@@ -1,5 +1,5 @@
 class PrivateLessonsController < ApplicationController
-  respond_to :html, :json, :js
+  respond_to :html, :json
   
   def index
     @private_lessons = PrivateLesson.all
@@ -14,7 +14,7 @@ class PrivateLessonsController < ApplicationController
   
   def create
     @private_lesson = PrivateLesson.new(params[:private_lesson])
-    flash[:notice] = "User successfully created" if @private_lesson.save
+    flash[:notice] = "Lesson successfully created" if @private_lesson.save
     respond_with(@private_lesson)
   end
   
