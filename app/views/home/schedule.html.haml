@@ -1,20 +1,25 @@
 #calendar
-
-%script#private_lesson_modal_form{:type => "text/html"}
-  #basic-modal-content
-    %h2 New Lesson 
-    %p.time_slot {{start_date}}
-    %p.time_slot {{start_time}} - {{end_time}}
-    
-    = form_for @private_lesson, :html => { :id => :private_lesson_form }, :remote => true do |f|
-      = f.error_messages
-      %p
+#event_edit_container
+  - form_for @private_lesson do |f|
+    %input{:type => "hidden"}
+    %ul
+      %li
+        %span Date:
+        %span.date_holder
+      %li
+        = f.label :start, 'Start Time:'
+        %select.start_time{:name => "private_lesson[start_time]"}
+          %option{:value => ""} Select Start Time
+      // %li
+      //   %label{:for => "end"} End Time:
+      //   %select.end_time{:name => "private_lesson[end_time]"}
+      //     %option{:value => ""} Select End Time
+      %li
         = f.label :student
         = autocomplete_field_tag :student, '', autocomplete_user_first_name_students_path, :id_element => '#user_id'
         = f.hidden_field :user_id, :id => :user_id
-    
-        = f.hidden_field :start_time, :value => '{{start_time}}'
-        = f.hidden_field :end_time, :value => '{{end_time}}'
+      
 
-      %p
-        = f.submit
+      // %li
+      //   %label{:for => "body"} Body:
+      //   %textarea{:name => "body"}

@@ -11,3 +11,8 @@ body.bp {
   @include blueprint-utilities;
   @include blueprint-debug;
   @include blueprint-interaction; }
+
+li {	
+  list-style:none;
+  margin:0;
+  padding:0; }

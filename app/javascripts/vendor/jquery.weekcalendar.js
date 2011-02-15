@@ -45,6 +45,8 @@
          timeslotHeight: 20,
          defaultEventLength : 2,
          timeslotsPerHour : 4,
+         minDate: null,
+         maxDate: null,
          buttons : true,
          buttonText : {
             today : "today",
@@ -222,7 +224,9 @@
           *  <li>%end%</li>
           *  <li>%date%</li>
 					* </ul>
-					* @type {string}
+					* @type {Function|string}
+					* @param {number} option daysToShow
+					* @return {String} the title attribute for the calendar
           */
          title : '%start% - %end%',
 				/**
@@ -237,7 +241,12 @@
 				 * @param {function(date,calendar)}
 				 */
 				getHeaderDate: null,
-				preventDragOnEventCreation: false
+				preventDragOnEventCreation: false,
+				/**
+				 * the event on which to bind calendar resize
+				 * @param {string}
+				 */
+				resizeEvent: 'resize.weekcalendar'
       },
 
       /***********************
@@ -252,10 +261,12 @@
          self._resizeCalendar();
          self._scrollToHour(self.options.date.getHours(), true);
 
-         $(window).unbind("resize.weekcalendar");
-         $(window).bind("resize.weekcalendar", function() {
-            self._resizeCalendar();
-         });
+				 if(this.options.resizeEvent){
+					 $(window).unbind(this.options.resizeEvent);
+					 $(window).bind(this.options.resizeEvent, function() {
+							self._resizeCalendar();
+					 });
+				}
 
       },
 
@@ -299,7 +310,7 @@
        */
       nextWeek : function() {
          //add 8 days to be sure of being in prev week - allows for daylight savings or other anomolies
-         var newDate = new Date(this.element.data("startDate").getTime() + MILLIS_IN_WEEK + (MILLIS_IN_WEEK / 7));
+         var newDate = new Date(this.element.data("startDate").getTime() + MILLIS_IN_WEEK + MILLIS_IN_DAY);
          this._clearCalendar();
          this._loadCalEvents(newDate);
       },
@@ -333,10 +344,12 @@
          self._resizeCalendar();
          self._scrollToHour(hour, false);
 
-         $(window).unbind("resize.weekcalendar");
-         $(window).bind("resize.weekcalendar", function() {
-            self._resizeCalendar();
-         });
+				 if(this.options.resizeEvent){
+					 $(window).unbind(this.options.resizeEvent);
+					 $(window).bind(this.options.resizeEvent, function() {
+							self._resizeCalendar();
+					 });
+				}
       },
 
       /*
@@ -443,6 +456,12 @@
         }
         var newDate = new Date(this.element.data("startDate").getTime());
         newDate.setDate(newDate.getDate() + this.options.daysToShow);
+			if (this.options.maxDate !== null) {
+				var maxDate = this._cleanDate(this.options.maxDate);
+				maxDate.setDate(maxDate.getDate() - this.options.daysToShow + 1);
+				if (newDate.getTime() > maxDate.getTime())
+					newDate = maxDate;
+			}
         this._clearCalendar();
         this._loadCalEvents(newDate);
       },
@@ -453,6 +472,11 @@
         }
         var newDate = new Date(this.element.data("startDate").getTime());
         newDate.setDate(newDate.getDate() - this.options.daysToShow);
+			if (this.options.minDate !== null) {
+				var minDate = this._cleanDate(this.options.minDate);
+				if (newDate.getTime() < minDate.getTime())
+					newDate = minDate;
+			}
         this._clearCalendar();
         this._loadCalEvents(newDate);
       },
@@ -493,7 +517,7 @@
          var options = this.options;
          if (options.businessHours.limitDisplay) {
             options.timeslotsPerDay = options.timeslotsPerHour * (options.businessHours.end - options.businessHours.start);
-            options.millisToDisplay = (options.businessHours.end - options.businessHours.start) * 60 * 60 * 1000;
+            options.millisToDisplay = (options.businessHours.end - options.businessHours.start) * 3600000; // 60 * 60 * 1000
             options.millisPerTimeslot = options.millisToDisplay / options.timeslotsPerDay;
          } else {
             options.timeslotsPerDay = options.timeslotsPerHour * 24;
@@ -682,7 +706,7 @@
       _renderCalendarHeader: function($calendarContainer){
         var self = this, options = this.options,
             showAsSeparatedUser = options.showAsSeparateUsers && options.users && options.users.length,
-            rowspan="", colspan, calendarHeaderHtml;
+            rowspan="", colspan = '', calendarHeaderHtml;
 
         if(showAsSeparatedUser){
           rowspan = " rowspan=\"2\"";
@@ -1133,7 +1157,7 @@
       _updateDayColumnHeader : function ($weekDayColumns) {
          var self = this;
          var options = this.options;
-         var currentDay = self._dateFirstDayOfWeek(self._cloneDate(self.element.data("startDate")));
+         var currentDay = self._cloneDate(self.element.data("startDate"));
          var showAsSeparatedUser = options.showAsSeparateUsers && options.users && options.users.length;
 
          self.element.find(".wc-header td.wc-day-column-header").each(function(i, val) {
@@ -1147,7 +1171,7 @@
 
          });
 
-         currentDay = self._dateFirstDayOfWeek(self._cloneDate(self.element.data("startDate")));
+         currentDay = self._cloneDate(self.element.data("startDate"));
 				 if(showAsSeparatedUser)
 				 {
 						self.element.find('.wc-header td.wc-user-header').each(function(i, val){
@@ -1160,7 +1184,7 @@
 						});
 				 }
 
-         currentDay = self._dateFirstDayOfWeek(self._cloneDate(self.element.data("startDate")));
+         currentDay = self._cloneDate(self.element.data("startDate"));
 
          $weekDayColumns.each(function(i, val) {
 
@@ -1179,7 +1203,7 @@
 
          //now update the freeBusy placeholders
          if(options.displayFreeBusys){
-            currentDay = self._dateFirstDayOfWeek(self._cloneDate(self.element.data("startDate")));
+            currentDay = self._cloneDate(self.element.data("startDate"));
             self.element.find('.wc-grid-row-freebusy .wc-column-freebusy').each(function(i, val){
               $(this).data("startDate", self._cloneDate(currentDay));
               $(this).data("endDate", new Date(currentDay.getTime() + (MILLIS_IN_DAY)));
@@ -1192,15 +1216,25 @@
          //now update the calendar title
          if(this.options.title && this.options.title.length){
             var _date = this.options.date,
-                _start = self._dateFirstDayOfWeek(self._cloneDate(self.element.data("startDate"))),
-                _end = self._dateLastDayOfWeek(self._cloneDate(self.element.data("startDate"))),
-                _title = this.options.title;
+                _start = self._cloneDate(self.element.data("startDate")),
+                _end = self._dateLastDayOfWeek(new Date(this._cloneDate(self.element.data("endDate")).getTime() - (MILLIS_IN_DAY))),
+                _title = this._getCalendarTitle();
             _title = _title.split('%start%').join(self._formatDate(_start , options.dateFormat));
             _title = _title.split('%end%').join(self._formatDate(_end , options.dateFormat));
             _title = _title.split('%date%').join(self._formatDate(_date , options.dateFormat));
             $('.wc-toolbar .wc-title', self.element).html(_title);
          }
          //self._clearFreeBusys();
+      },
+
+      /*
+       * gets the calendar title options
+       */
+      _getCalendarTitle: function() {
+			if($.isFunction(this.options.title)){
+				return this.options.title(this.options.daysToShow);
+			}
+			return this.options.title;
       },
 
       /*
@@ -1252,6 +1286,7 @@
               var start = new Date(initialStart);
               var endDay = initialEnd.getDay();
               var $weekDay;
+              var isMultiday = false;
 
               while( start.getDay() < endDay ){
                 calEvent.start = start;
@@ -1270,11 +1305,12 @@
                 start.setHours( minHour );
                 start.setMinutes( 0 );
                 start.setSeconds( 0 );
+                isMultiday = true;
               }
-              if ( start < initialEnd ) {
+              if ( start <= initialEnd ) {
                 calEvent.start = start;
                 calEvent.end = initialEnd;
-                if ( ($weekDay = self._findWeekDayForEvent(calEvent, $weekDayColumns))) {
+                if ( ((isMultiday && calEvent.start.getTime() != calEvent.end.getTime()) || !isMultiday) && ($weekDay = self._findWeekDayForEvent(calEvent, $weekDayColumns))) {
                   self._renderEvent(calEvent, $weekDay);
                 }
               }
@@ -1342,6 +1378,9 @@
 
          return $calEventList;
 
+      },
+      addEvent: function(){
+      	return this._renderEvent.apply(this, arguments);
       },
 
       _adjustOverlappingEvents : function($weekDay) {
@@ -1501,11 +1540,12 @@
          var calEvent = $calEvent.data("calEvent");
          var pxPerMillis = $weekDay.height() / options.millisToDisplay;
          var firstHourDisplayed = options.businessHours.limitDisplay ? options.businessHours.start : 0;
-         var startMillis = calEvent.start.getTime() - new Date(calEvent.start.getFullYear(), calEvent.start.getMonth(), calEvent.start.getDate(), firstHourDisplayed).getTime();
-         var eventMillis = calEvent.end.getTime() - calEvent.start.getTime();
+         var startMillis = this._getDSTdayShift(calEvent.start).getTime() - this._getDSTdayShift(new Date(calEvent.start.getFullYear(), calEvent.start.getMonth(), calEvent.start.getDate(), firstHourDisplayed)).getTime();
+         var eventMillis = this._getDSTdayShift(calEvent.end).getTime() - this._getDSTdayShift(calEvent.start).getTime();
          var pxTop = pxPerMillis * startMillis;
          var pxHeight = pxPerMillis * eventMillis;
-         $calEvent.css({top: pxTop, height: pxHeight});
+         //var pxHeightFallback = pxPerMillis * (60 / options.timeslotsPerHour) * 60 * 1000;
+			$calEvent.css({top: pxTop, height: pxHeight || (pxPerMillis * 3600000 / options.timeslotsPerHour)});
       },
 
       /*
@@ -1515,10 +1555,10 @@
        */
       _getEventDurationFromPositionedEventElement : function($weekDay, $calEvent, top) {
          var options = this.options;
-         var startOffsetMillis = options.businessHours.limitDisplay ? options.businessHours.start * 60 * 60 * 1000 : 0;
+         var startOffsetMillis = options.businessHours.limitDisplay ? options.businessHours.start * 3600000 : 0;
          var start = new Date($weekDay.data("startDate").getTime() + startOffsetMillis + Math.round(top / options.timeslotHeight) * options.millisPerTimeslot);
          var end = new Date(start.getTime() + ($calEvent.height() / options.timeslotHeight) * options.millisPerTimeslot);
-         return {start: start, end: end};
+         return {start: this._getDSTdayShift(start, -1), end: this._getDSTdayShift(end, -1)};
       },
 
       /*
@@ -1591,10 +1631,10 @@
          var options = this.options;
          $calEvent.draggable({
             handle : ".wc-time",
-            containment: ".wc-scrollable-grid",
+            containment: "div.wc-time-slots",
             snap: '.wc-day-column-inner',
             snapMode: 'inner',
-            snapTolerance: options.timeSlotHeight - 1,
+            snapTolerance: options.timeslotHeight - 1,
             revert: 'invalid',
             opacity: 0.5,
             grid : [$calEvent.outerWidth() + 1, options.timeslotHeight ],
@@ -1683,6 +1723,8 @@
             stop :function(event, ui) {
                var $calEvent = ui.element;
                var newEnd = new Date($calEvent.data("calEvent").start.getTime() + Math.max(1,Math.round(ui.size.height / options.timeslotHeight)) * options.millisPerTimeslot);
+               if (self._needDSTdayShift($calEvent.data("calEvent").start, newEnd))
+						newEnd = self._getDSTdayShift(newEnd, -1);
                var newCalEvent = $.extend(true, {}, calEvent, {start: calEvent.start, end: newEnd});
                self._adjustForEventCollisions($weekDay, $calEvent, newCalEvent, calEvent);
 
@@ -1697,7 +1739,7 @@
                }, 500);
             }
          });
-         $('.ui-resizable-handle', $calEvent).html('=');
+         $('.ui-resizable-handle', $calEvent).text('=');
       },
 
       /*
@@ -1837,6 +1879,19 @@
          var midnightCurrentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
          var adjustedDate = new Date(midnightCurrentDate);
          adjustedDate.setDate(adjustedDate.getDate() - self._getAdjustedDayIndex(midnightCurrentDate));
+
+			if (this.options.minDate !== null) {
+				var minDate = this._cleanDate(this.options.minDate);
+				if (adjustedDate.getTime() < minDate.getTime())
+					adjustedDate = minDate;
+			}
+			if (this.options.maxDate !== null) {
+				var maxDate = this._cleanDate(this.options.maxDate);
+				maxDate.setDate(maxDate.getDate() - this.options.daysToShow + 1);
+				if (adjustedDate.getTime() > maxDate.getTime())
+					adjustedDate = maxDate;
+			}
+
          return adjustedDate;
        },
 
@@ -1849,6 +1904,19 @@
          var adjustedDate = new Date(midnightCurrentDate);
          var daysToAdd = (self.options.daysToShow - 1 - self._getAdjustedDayIndex(midnightCurrentDate));
          adjustedDate.setDate(adjustedDate.getDate() + daysToAdd );
+
+			if (this.options.minDate !== null) {
+				var minDate = this._cleanDate(this.options.minDate);
+				minDate.setDate(minDate.getDate() + this.options.daysToShow - 1);
+				if (adjustedDate.getTime() < minDate.getTime())
+					adjustedDate = minDate;
+			}
+			if (this.options.maxDate !== null) {
+				var maxDate = this._cleanDate(this.options.maxDate);
+				if (adjustedDate.getTime() > maxDate.getTime())
+					adjustedDate = maxDate;
+			}
+
          return adjustedDate;
       },
 
@@ -1938,147 +2006,78 @@
        * http://jacwright.com/projects/javascript/date_format
        */
       _formatDate : function(date, format) {
-         var options = this.options;
-         var returnStr = '';
-         for(var i = 0; i < format.length; i++) {
-            var curChar = format.charAt(i);
-            if ($.isFunction(this._replaceChars[curChar])) {
-            //   returnStr += this._replaceChars[curChar](date, options);
-              var res = this._replaceChars[curChar](date, options);
-              if (res === '00' && options.alwaysDisplayTimeMinutes === false) {
-                 //remove previous character
-                 returnStr = returnStr.slice(0, -1);
-              }
-              else {
-                    returnStr += res;    
-              }
-            } else {
-               returnStr += curChar;
-            }
-         }
-         return returnStr;
+			var returnStr = '';
+			for (var i = 0; i < format.length; i++) {
+				var curChar = format.charAt(i);
+				if (i != 0 && format.charAt(i - 1) == "\\") { 
+					returnStr += curChar;
+				}
+				else if (this._replaceChars[curChar]) {
+					returnStr += this._replaceChars[curChar](date, this._formatDate);
+				} else if (curChar != "\\"){
+					returnStr += curChar;
+				}
+			}
+			return returnStr;
       },
 
       _replaceChars : {
-
-         // Day
-         d: function(date) {
-            return (date.getDate() < 10 ? '0' : '') + date.getDate();
-         },
-         D: function(date, options) {
-            return options.shortDays[date.getDay()];
-         },
-         j: function(date) {
-            return date.getDate();
-         },
-         l: function(date, options) {
-            return options.longDays[date.getDay()];
-         },
-         N: function(date) {
-            return date.getDay() + 1;
-         },
-         S: function(date) {
-            return (date.getDate() % 10 == 1 && date.getDate() != 11 ? 'st' : (date.getDate() % 10 == 2 && date.getDate() != 12 ? 'nd' : (date.getDate() % 10 == 3 && date.getDate() != 13 ? 'rd' : 'th')));
-         },
-         w: function(date) {
-            return date.getDay();
-         },
-         z: function(date) {
-            return "Not Yet Supported";
-         },
-         // Week
-         W: function(date) {
-            return "Not Yet Supported";
-         },
-         // Month
-         F: function(date, options) {
-            return options.longMonths[date.getMonth()];
-         },
-         m: function(date) {
-            return (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1);
-         },
-         M: function(date, options) {
-            return options.shortMonths[date.getMonth()];
-         },
-         n: function(date) {
-            return date.getMonth() + 1;
-         },
-         t: function(date) {
-            return "Not Yet Supported";
-         },
-         // Year
-         L: function(date) {
-            return "Not Yet Supported";
-         },
-         o: function(date) {
-            return "Not Supported";
-         },
-         Y: function(date) {
-            return date.getFullYear();
-         },
-         y: function(date) {
-            return ('' + date.getFullYear()).substr(2);
-         },
-         // Time
-         a: function(date) {
-            return date.getHours() < 12 ? 'am' : 'pm';
-         },
-         A: function(date) {
-            return date.getHours() < 12 ? 'AM' : 'PM';
-         },
-         B: function(date) {
-            return "Not Yet Supported";
-         },
-         g: function(date) {
-            return date.getHours() % 12 || 12;
-         },
-         G: function(date) {
-            return date.getHours();
-         },
-         h: function(date) {
-            return ((date.getHours() % 12 || 12) < 10 ? '0' : '') + (date.getHours() % 12 || 12);
-         },
-         H: function(date) {
-            return (date.getHours() < 10 ? '0' : '') + date.getHours();
-         },
-         i: function(date) {
-            return (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
-         },
-         s: function(date) {
-            return (date.getSeconds() < 10 ? '0' : '') + date.getSeconds();
-         },
-         // Timezone
-         e: function(date) {
-            return "Not Yet Supported";
-         },
-         I: function(date) {
-            return "Not Supported";
-         },
-         O: function(date) {
-            return (date.getTimezoneOffset() < 0 ? '-' : '+') + (date.getTimezoneOffset() / 60 < 10 ? '0' : '') + (date.getTimezoneOffset() / 60) + '00';
-         },
-         T: function(date) {
-            return "Not Yet Supported";
-         },
-         Z: function(date) {
-            return date.getTimezoneOffset() * 60;
-         },
-         // Full Date/Time
-         c: function(date) {
-            return "Not Yet Supported";
-         },
-         r: function(date) {
-            return date.toString();
-         },
-         U: function(date) {
-            return date.getTime() / 1000;
-         }
+			shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			longMonths: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+			shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+			longDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+			
+			// Day
+			d: function(date) { return (date.getDate() < 10 ? '0' : '') + date.getDate(); },
+			D: function(date) { return this.shortDays[date.getDay()]; },
+			j: function(date) { return date.getDate(); },
+			l: function(date) { return this.longDays[date.getDay()]; },
+			N: function(date) { return date.getDay() + 1; },
+			S: function(date) { return (date.getDate() % 10 == 1 && date.getDate() != 11 ? 'st' : (date.getDate() % 10 == 2 && date.getDate() != 12 ? 'nd' : (date.getDate() % 10 == 3 && date.getDate() != 13 ? 'rd' : 'th'))); },
+			w: function(date) { return date.getDay(); },
+			z: function(date) { var d = new Date(date.getFullYear(),0,1); return Math.ceil((date - d) / 86400000); }, // Fixed now
+			// Week
+			W: function(date) { var d = new Date(date.getFullYear(), 0, 1); return Math.ceil((((date - d) / 86400000) + d.getDay() + 1) / 7); }, // Fixed now
+			// Month
+			F: function(date) { return this.longMonths[date.getMonth()]; },
+			m: function(date) { return (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1); },
+			M: function(date) { return this.shortMonths[date.getMonth()]; },
+			n: function(date) { return date.getMonth() + 1; },
+			t: function(date) { var d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 0).getDate() }, // Fixed now, gets #days of date
+			// Year
+			L: function(date) { var year = date.getFullYear(); return (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)); },	// Fixed now
+			o: function(date) { var d  = new Date(date.valueOf());  d.setDate(d.getDate() - ((date.getDay() + 6) % 7) + 3); return d.getFullYear();}, //Fixed now
+			Y: function(date) { return date.getFullYear(); },
+			y: function(date) { return ('' + date.getFullYear()).substr(2); },
+			// Time
+			a: function(date) { return date.getHours() < 12 ? 'am' : 'pm'; },
+			A: function(date) { return date.getHours() < 12 ? 'AM' : 'PM'; },
+			B: function(date) { return Math.floor((((date.getUTCHours() + 1) % 24) + date.getUTCMinutes() / 60 + date.getUTCSeconds() / 3600) * 1000 / 24); }, // Fixed now
+			g: function(date) { return date.getHours() % 12 || 12; },
+			G: function(date) { return date.getHours(); },
+			h: function(date) { return ((date.getHours() % 12 || 12) < 10 ? '0' : '') + (date.getHours() % 12 || 12); },
+			H: function(date) { return (date.getHours() < 10 ? '0' : '') + date.getHours(); },
+			i: function(date) { return (date.getMinutes() < 10 ? '0' : '') + date.getMinutes(); },
+			s: function(date) { return (date.getSeconds() < 10 ? '0' : '') + date.getSeconds(); },
+			u: function(date) { var m = date.getMilliseconds(); return (m < 10 ? '00' : (m < 100 ?
+		'0' : '')) + m; },
+			// Timezone
+			e: function(date) { return "Not Yet Supported"; },
+			I: function(date) { return "Not Yet Supported"; },
+			O: function(date) { return (-date.getTimezoneOffset() < 0 ? '-' : '+') + (Math.abs(date.getTimezoneOffset() / 60) < 10 ? '0' : '') + (Math.abs(date.getTimezoneOffset() / 60)) + '00'; },
+			P: function(date) { return (-date.getTimezoneOffset() < 0 ? '-' : '+') + (Math.abs(date.getTimezoneOffset() / 60) < 10 ? '0' : '') + (Math.abs(date.getTimezoneOffset() / 60)) + ':00'; }, // Fixed now
+			T: function(date) { var m = date.getMonth(); date.setMonth(0); var result = date.toTimeString().replace(/^.+ \(?([^\)]+)\)?$/, '$1'); date.setMonth(m); return result;},
+			Z: function(date) { return -date.getTimezoneOffset() * 60; },
+			// Full Date/Time
+			c: function(date, _formatDate) { return _formatDate("Y-m-d\\TH:i:sP"); }, // Fixed now
+			r: function(date) { return date.toString(); },
+			U: function(date) { return date.getTime() / 1000; }
       },
       
       /* USER MANAGEMENT FUNCTIONS */
 
-      getUserForId: function(id, user){
-        $.extend(user, this.options.users[this._getUserIndexFromId(id)]);
+      getUserForId: function(id){
+        return $.extend({}, this.options.users[this._getUserIndexFromId(id)]);
       },
 
       /**
@@ -2432,9 +2431,25 @@
 				}
 				var dayName = options.useShortDayNames ? options.shortDays[date.getDay()] : options.longDays[date.getDay()];
 				return dayName + (options.headerSeparator) + this._formatDate(date, options.dateFormat);
-			}
+			},
 
 
+
+      /**
+       * returns corrected date related to DST problem
+       */
+      _getDSTdayShift : function(date, shift) {
+			var start = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0);
+			var offset1 = start.getTimezoneOffset();
+			var offset2 = date.getTimezoneOffset();
+         if (offset1 == offset2)
+				return date;
+			shift = shift ? shift : 1;
+			return new Date(date.getTime() - shift * (offset1 > offset2 ? -1 : 1) * (Math.max(offset1, offset2) - Math.min(offset1, offset2)) * 60000);
+      },
+      _needDSTdayShift : function(date1, date2) {
+			return date1.getTimezoneOffset() != date2.getTimezoneOffset();
+      }
       
 
 

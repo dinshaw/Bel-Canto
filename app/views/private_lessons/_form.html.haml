@@ -5,9 +5,9 @@
   = f.hidden_field :user_id, :id => :user_id
 %p
   = f.label :start_time
-  = f.datetime_select :start_time
+  = f.datetime_select :start_time, :minute_step => 20
 %p
   = f.label :end_time
-  = f.datetime_select :end_time
+  = f.datetime_select :end_time, :minute_step => 20
 %p
   = f.submit

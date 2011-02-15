@@ -1,19 +1,20 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0'
+gem 'rails', '3.0.3'
 gem 'capistrano'
 
 
 gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'cancan'
-gem 'compass', '>= 0.10.5.pre.1'
+gem 'compass'
 gem 'devise'
 gem 'formtastic'
-gem 'haml', '3.0.18'
+gem 'haml'
 gem 'has_scope'
-gem 'hoptoad_notifier', '>= 2.3.7'
+gem 'hoptoad_notifier'
 gem 'hpricot'
+gem 'ice_cube'
 gem 'jammit'
 gem 'nifty-generators'
 gem 'paperclip'
@@ -30,7 +31,7 @@ gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git', :branc
 
 
 group :development, :test do
-	gem 'rspec-rails', '>= 2.0.0.beta.22'
+	gem 'rspec-rails'
 end
 
 

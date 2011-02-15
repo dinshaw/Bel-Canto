@@ -34,10 +34,21 @@ textarea{
 .add_field{
   clear:both;
 }
+
 /******** Student *******/
 .nested_resource_item {
   clear: both;
-  float:left;
+  float: left;
   * { @extend .left_float_item }
 }
 
+/******** Auto-complete dropdown *******/
+.ui-autocomplete {
+  margin: 0 !important;
+  padding: 0 !important;  
+  list-style: none !important;
+  li {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

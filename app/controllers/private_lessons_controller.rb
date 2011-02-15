@@ -4,7 +4,16 @@ class PrivateLessonsController < ApplicationController
   def index
     @private_lessons = PrivateLesson.all
     respond_with(@private_lessons) do |format|
-      format.js { render :json => @private_lessons.map(&:to_json) }
+      format.json { 
+        render :text => @private_lessons.collect{ |lesson|
+          { 
+            "id" => lesson.id,
+            "start" => lesson.start_time,
+            "end" => lesson.end_time,
+            "title" => lesson.student.full_name
+          }
+        }.to_json
+      }
     end
   end
   
@@ -15,7 +24,7 @@ class PrivateLessonsController < ApplicationController
   def create
     @private_lesson = PrivateLesson.new(params[:private_lesson])
     flash[:notice] = "Lesson successfully created" if @private_lesson.save
-    respond_with(@private_lesson)
+    respond_with(@private_lesson, :location => private_lessons_url)
   end
   
   def edit

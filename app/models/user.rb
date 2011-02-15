@@ -63,6 +63,11 @@ class User < ActiveRecord::Base
     [first_name, last_name].join(' ')
   end
   alias to_label full_name
+  alias name full_name  
+  
+  def super_user?
+    true
+  end
   
   def reverse_name
     [last_name, first_name].join(', ')
