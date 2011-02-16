@@ -6,20 +6,23 @@
       %li
         %span Date:
         %span.date_holder
+
       %li
         = f.label :start, 'Start Time:'
         %select.start_time{:name => "private_lesson[start_time]"}
           %option{:value => ""} Select Start Time
-      // %li
-      //   %label{:for => "end"} End Time:
-      //   %select.end_time{:name => "private_lesson[end_time]"}
-      //     %option{:value => ""} Select End Time
+
+        = f.hidden_field :end_time
+
       %li
         = f.label :student
         = autocomplete_field_tag :student, '', autocomplete_user_first_name_students_path, :id_element => '#user_id'
         = f.hidden_field :user_id, :id => :user_id
-      
 
-      // %li
-      //   %label{:for => "body"} Body:
-      //   %textarea{:name => "body"}
+%script.error_message_tpl{:type => 'text/html'}
+  #error_messages
+    %ul
+      {{#errors}}
+      %li {{i}}
+      {{/errors}}
+      

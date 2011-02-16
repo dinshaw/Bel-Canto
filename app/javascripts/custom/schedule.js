@@ -42,7 +42,7 @@ $(document).ready(function() {
       var endField = $dialogContent.find("select.end_time").val(calEvent.end);
       var titleField = $dialogContent.find("input[name='title']");
       var bodyField = $dialogContent.find("textarea[name='body']");
-
+      var template = $(".error_message_tpl").html();
 
       $dialogContent.dialog({
         width: 350,
@@ -60,19 +60,26 @@ $(document).ready(function() {
               type: 'POST',
               url: form.attr('action')+'.json',
               data: form.serialize(),
-              complete: function(res) { console.log(res)},
+              complete: function(res) { 
+                if (res.status == 422) {
+                  var view = {'errors':res.response}
+                  $dialogContent.append(Mustache.to_html(template, view));
+                  
+                } else if (res.status == 200) {
+                  // calEvent.id = id;
+                  // id++;
+                  // calEvent.start = new Date(startField.val());
+                  // calEvent.end = new Date(endField.val());
+                  // calEvent.title = titleField.val();
+                  // calEvent.body = bodyField.val();
+                  // 
+                  // $calendar.weekCalendar("removeUnsavedEvents");
+                  // $calendar.weekCalendar("updateEvent", calEvent);
+                  $dialogContent.dialog("close");   
+                }
+              },
               dataType: 'json'
             });
-            // calEvent.id = id;
-            // id++;
-            // calEvent.start = new Date(startField.val());
-            // calEvent.end = new Date(endField.val());
-            // calEvent.title = titleField.val();
-            // calEvent.body = bodyField.val();
-            // 
-            // $calendar.weekCalendar("removeUnsavedEvents");
-            // $calendar.weekCalendar("updateEvent", calEvent);
-            // $dialogContent.dialog("close");
           },
           cancel : function() {
             $dialogContent.dialog("close");
