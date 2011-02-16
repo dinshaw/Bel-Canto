@@ -24,7 +24,17 @@ class PrivateLessonsController < ApplicationController
   def create
     @private_lesson = PrivateLesson.new(params[:private_lesson])
     flash[:notice] = "Lesson successfully created" if @private_lesson.save
-    respond_with(@private_lesson, :location => private_lessons_url)
+    respond_with(@private_lesson) #do |lesson|
+  #     format.json { 
+  #       render :json => { :errors => @private_lesson.errors, :status => :unprocessable_entity }
+  #     }
+  #   end
+  # rescue ActiveRecord::RecordInvalid => e
+  #   respond_with(@private_lesson) do |lesson|
+  #     format.json { 
+  #       render :json => { :errors => @private_lesson.errors, :status => :unprocessable_entity }
+  #     }
+  #   end
   end
   
   def edit

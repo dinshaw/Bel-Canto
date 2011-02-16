@@ -36,7 +36,6 @@ $(document).ready(function() {
       return calEvent.readOnly != true;
     },
     eventNew : function(calEvent, $event) {
-      console.log('new')
       var $dialogContent = $("#event_edit_container");
       resetForm($dialogContent);
       var startField = $dialogContent.find("select.start_time").val(calEvent.start);
@@ -57,18 +56,23 @@ $(document).ready(function() {
         buttons: {
           save : function() {
             var form = $dialogContent.find("form");
-            $.post(form.attr('action'), form.serialize());
-            console.log('save')
-            calEvent.id = id;
-            id++;
-            calEvent.start = new Date(startField.val());
-            calEvent.end = new Date(endField.val());
-            calEvent.title = titleField.val();
-            calEvent.body = bodyField.val();
-
-            $calendar.weekCalendar("removeUnsavedEvents");
-            $calendar.weekCalendar("updateEvent", calEvent);
-            $dialogContent.dialog("close");
+            $.ajax({
+              type: 'POST',
+              url: form.attr('action')+'.json',
+              data: form.serialize(),
+              complete: function(res) { console.log(res)},
+              dataType: 'json'
+            });
+            // calEvent.id = id;
+            // id++;
+            // calEvent.start = new Date(startField.val());
+            // calEvent.end = new Date(endField.val());
+            // calEvent.title = titleField.val();
+            // calEvent.body = bodyField.val();
+            // 
+            // $calendar.weekCalendar("removeUnsavedEvents");
+            // $calendar.weekCalendar("updateEvent", calEvent);
+            // $dialogContent.dialog("close");
           },
           cancel : function() {
             $dialogContent.dialog("close");
@@ -87,7 +91,7 @@ $(document).ready(function() {
     },
     
     eventClick : function(calEvent, $event) {
-
+      // edit
       if (calEvent.readOnly) {
         return;
       }
@@ -138,13 +142,15 @@ $(document).ready(function() {
       },
       eventMouseover : function(calEvent, $event) {
       },
+      
       eventMouseout : function(calEvent, $event) {
       },
+      
       noEvents : function() {
 
       },
       data : function(start, end, callback) {
-        $.get('/private_lessons.json', function(res){
+        $.getJSON('/private_lessons.json', function(res){
           callback(res);
         });
       }
